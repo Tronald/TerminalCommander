@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalCommander", "TerminalCommander\TerminalCommander.csproj", "{A339852B-B956-4A52-89E6-21F22B77C5CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A339852B-B956-4A52-89E6-21F22B77C5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A339852B-B956-4A52-89E6-21F22B77C5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A339852B-B956-4A52-89E6-21F22B77C5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A339852B-B956-4A52-89E6-21F22B77C5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E3D1917-ED99-4713-A041-64732FC1F518}
+	EndGlobalSection
+EndGlobal
