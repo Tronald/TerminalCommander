@@ -6,7 +6,7 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 
 ## Features
 
-| Feature                          | Hotkey Commands                 | Description                                                                                            |
+| Feature                          | Hotkey Command                 | Description                                                                                            |
 |----------------------------------|----------------------|--------------------------------------------------------------------------------------------------------|
 | Jam All Turrets and Landmines    | <kbd>Ctrl</kbd>+<kbd>J</kbd> | Temporarily deactivate all active turrets and landmines to create a safe path for your team.           |
 | Open / Close All Facility Doors   | <kbd>Ctrl</kbd>+<kbd>D</kbd> | Open / Close all powered doors within the facility.                                                    |
