@@ -4,7 +4,7 @@
 
 Terminal Commander is a mod for Lethal Company designed to enhance your terminal operation experience by introducing convenient hotkeys. This mod simplifies various tasks, allowing you to manage turrets, landmines, player views, and communication more efficiently.
 
-## Features
+## Hot Key Features
 
 | Feature                          | Hotkey Command                 | Description                                                                                            |
 |----------------------------------|----------------------|--------------------------------------------------------------------------------------------------------|
@@ -13,6 +13,12 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | Quickly View Monitor              | <kbd>Ctrl</kbd>+<kbd>M</kbd> | Quickly view or close the monitor within the terminal.                                                  |
 | Fast Player View Switch           | <kbd>Ctrl</kbd>+<kbd>S</kbd> | Swiftly switch between different players on the monitor, providing you with a dynamic perspective.     |
 | Quick Transmit                    | <kbd>Ctrl</kbd>+<kbd>T</kbd> | **Requirements:** Signal Translator <br> Simplify communication by automatically entering the "transmit" command. You only need to type in your message. |
+
+## Command Features
+
+| Command                         | Description                                                                                            |
+|----------------------------------|--------------------------------------------------------------------------------------------------------|
+| "help" -> "commander"    | Displays a list of hot key commands within the terminal for reference.           |
 
 ## Installation
 
