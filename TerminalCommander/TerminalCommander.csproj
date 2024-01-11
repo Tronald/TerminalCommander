@@ -48,6 +48,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TerminalApi, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NotAtomicBomb.TerminalApi.1.5.1\lib\net46\TerminalApi.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
     </Reference>
@@ -57,6 +60,8 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -72,5 +77,14 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
+xcopy /y "$(TargetDir)TerminalApi.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
+xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Package\Tronald-Terminal_Commander\config"
+xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Package\Tronald-Terminal_Commander\plugins"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

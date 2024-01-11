@@ -29,7 +29,8 @@ namespace TerminalCommander
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalPatch));
 
-            TerminalPatch.SetLogSource(log);
+            TerminalPatch.SetSource(this);
         }
+
     }
 }
