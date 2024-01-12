@@ -4,7 +4,7 @@
 
 Terminal Commander is a mod for Lethal Company designed to enhance your terminal operation experience by introducing convenient hotkeys. This mod simplifies various tasks, allowing you to manage turrets, landmines, player views, and communication more efficiently.
 
-## Hot Key Features
+## Hotkey Features
 
 | Feature                          | Hotkey Command                 | Description                                                                                            |
 |----------------------------------|----------------------|--------------------------------------------------------------------------------------------------------|
