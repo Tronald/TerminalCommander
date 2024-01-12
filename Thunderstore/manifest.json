@@ -1,6 +1,6 @@
 {
   "name": "TerminalCommander",
-  "version_number": "1.5.0",
+  "version_number": "1.6.0",
   "website_url": "https://github.com/Tronald/TerminalCommander",
   "description": "Enhance your terminal operation experience by introducing convenient hotkeys. This mod simplifies various tasks, allowing you to manage turrets, landmines, player views, and communication more efficiently.",
   "dependencies": [
