@@ -18,3 +18,12 @@
 ### General Improvements
 
 - Made several optimizations and enhancements to improve overall game performance and user interface.
+
+## 1.2.0
+
+- Thunderstore package details update.
+
+## 1.3.0
+
+- Fixes bug with help viewer.
+- Updates TerminalAPI.
