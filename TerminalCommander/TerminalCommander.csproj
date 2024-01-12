@@ -84,7 +84,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
 xcopy /y "$(TargetDir)TerminalApi.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
-xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Package\Tronald-Terminal_Commander\config"
-xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Package\Tronald-Terminal_Commander\plugins"</PostBuildEvent>
+xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Thunderstore\config"
+xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Thunderstore\plugins"</PostBuildEvent>
   </PropertyGroup>
 </Project>

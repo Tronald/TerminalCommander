@@ -234,7 +234,7 @@ namespace TerminalCommander.Patches
                 ">Ctrl+J\nJam all turrets and land mines.\n\n" +
                 ">Ctrl+M\nTurn monitor on and off.\n\n" +
                 ">Ctrl+S\nQuickly switch players on the monitor.\n\n" +
-                ">Ctrl+T\nBegin a signal transmission command.";
+                ">Ctrl+T\nBegin a signal transmission command\n\n.";
 
 
         }

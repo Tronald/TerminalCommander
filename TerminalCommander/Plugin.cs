@@ -11,7 +11,7 @@ namespace TerminalCommander
     {
         public const string modGUID = "Tronald.TerminalCommander";
         public const string modName = "TerminalCommander";
-        public const string modVersion = "1.0.0";
+        public const string modVersion = "1.3.0";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
