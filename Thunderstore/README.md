@@ -1,6 +1,6 @@
 # Terminal Commander Mod for Lethal Company
 
-![banner](https://github.com/Tronald/TerminalCommander/blob/main/banner.jpg)
+![banner](https://github.com/Tronald/TerminalCommander/blob/main/banner.jpg?raw=true)
 
 ## Overview
 
@@ -21,7 +21,3 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | Command                         | Description                                                                                            |
 |----------------------------------|--------------------------------------------------------------------------------------------------------|
 | "help" -> "commander"    | Displays a list of hot key commands within the terminal for reference.           |
-
-## Installation
-
-[Available on Thunderstore](https://thunderstore.io/c/lethal-company/p/Tronald/TerminalCommander/)

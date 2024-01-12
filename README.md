@@ -1,6 +1,6 @@
 # Terminal Commander Mod for Lethal Company
 
-![banner](https://github.com/Tronald/TerminalCommander/blob/main/banner.jpg)
+![banner](https://github.com/Tronald/TerminalCommander/blob/main/banner.jpg?raw=true)
 
 ## Overview
 
