@@ -59,7 +59,7 @@ namespace TerminalCommander.Patches
             {
                 if (___terminalInUse && BepInEx.UnityInput.Current.GetKey(KeyCode.LeftControl) || BepInEx.UnityInput.Current.GetKey(KeyCode.RightControl))
                 {
-                    Terminal t = FindActiveTerminal();
+                    Terminal t = FindActiveObject<Terminal>();
                     RoundManager r = FindRoundManager();
 
                     if (t == null)
@@ -183,19 +183,16 @@ namespace TerminalCommander.Patches
             t.screenText.ActivateInputField();
             ((Selectable)t.screenText).Select();
         }    
-        static Terminal FindActiveTerminal()
+       
+        static T FindActiveObject<T>() where T : UnityEngine.Object
         {
-            // Implement logic to find the active instance of the TerminalNode
-            // This can be done through GameObject.Find, iterating through GameObjects, etc.
+            T[] unityObjects = UnityEngine.Object.FindObjectsOfType<T>();
 
-            // Example: finding by tag
-            Terminal[] terminals = UnityEngine.Object.FindObjectsOfType<Terminal>();
-
-            if (terminals.Length > 0)
+            if (unityObjects.Length > 0)
             {
-                // For simplicity, just return the first TerminalNode found.
-                // You might want to implement more sophisticated logic based on your requirements.
-                return terminals[0];
+                // For simplicity, just return the first found.
+                //May need to expand later if first object is not desired object.
+                return unityObjects[0];
             }
 
             return null;
@@ -234,7 +231,7 @@ namespace TerminalCommander.Patches
                 ">Ctrl+J\nJam all turrets and land mines.\n\n" +
                 ">Ctrl+M\nTurn monitor on and off.\n\n" +
                 ">Ctrl+S\nQuickly switch players on the monitor.\n\n" +
-                ">Ctrl+T\nBegin a signal transmission command\n\n.";
+                ">Ctrl+T\nBegin a signal transmission command\n\n";
 
 
         }

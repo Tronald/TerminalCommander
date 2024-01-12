@@ -27,3 +27,8 @@
 
 - Fixes bug with help viewer.
 - Updates TerminalAPI.
+
+## 1.4.0
+
+- Fixes bug with help viewer.
+- UnityObject finder refactor.
