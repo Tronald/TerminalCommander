@@ -32,3 +32,8 @@
 
 - Fixes bug with help viewer.
 - UnityObject finder refactor.
+
+## 1.5.0
+
+- Minor bug fixes.
+- Updates branding.
