@@ -20,7 +20,8 @@ namespace TerminalCommander
 
         private static Commander instance;
 
-        public static TerminalCommanderConfiguration Configs = new TerminalCommanderConfiguration();
+        public TerminalCommanderConfiguration Configs = new TerminalCommanderConfiguration();
+        public NetworkHandler NetworkHandler;
 
         internal ManualLogSource log;
 
@@ -31,14 +32,17 @@ namespace TerminalCommander
             log = BepInEx.Logging.Logger.CreateLogSource(modGUID);
             log.LogInfo($"{modName} is loaded!");
 
-            //Set_Configs();
+            //Configs.Set_Configs(this);
+            //NetworkHandler = new NetworkHandler(this);         
+
+            TerminalHotkeys.SetSource(this);
+            TerminalCommands.SetSource(this);
+            //GameManagement.SetSource(this);
 
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalHotkeys));
             harmony.PatchAll(typeof(TerminalCommands));
-
-            TerminalHotkeys.SetSource(this);
-            TerminalCommands.SetSource(this);
+            //harmony.PatchAll(typeof(GameManagement));
         }      
     }    
 }

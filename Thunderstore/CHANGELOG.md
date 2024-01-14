@@ -41,3 +41,8 @@
 ## 1.6.1
 
 - Branding fix.
+
+## 1.7.0
+
+- Adds teleport "tp" command.
+- Adds inverse teleport "itp" command. 
