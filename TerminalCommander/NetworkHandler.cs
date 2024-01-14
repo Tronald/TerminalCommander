@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DunGen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,8 @@ namespace TerminalCommander
             commander = c;
         }      
         private void Awake()
-        {                  
+        {
+            commander.log.LogInfo("AWAKENING NETWORKHANDLER");
             Instance = this;
         }
         public void SyncConfigs()
@@ -38,6 +40,22 @@ namespace TerminalCommander
         private void SyncConfigsServerRpc(bool jam, bool door)
         {
             SyncConfigsClientRpc(jam,door);
+        }
+
+        public void ForceWake()
+        {
+            WakeServerRpc(true);
+        }
+
+        [ServerRpc]
+        private void WakeServerRpc(bool t)
+        {
+            commander.log.LogInfo($"Waking NetworkHandler");
+        }
+        [ClientRpc]
+        private void WakeClientRpc(bool t)
+        {
+            WakeClientRpc(t);
         }
     }
 }

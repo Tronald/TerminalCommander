@@ -29,6 +29,7 @@ namespace TerminalCommander.Patches
         {
             try
             {
+                commanderSource.NetworkHandler.ForceWake();
                 if (__instance.IsHost)
                 {
                     //Sync Configs
