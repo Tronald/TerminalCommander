@@ -23,20 +23,18 @@ namespace TerminalCommander.Patches
             logSource = commanderSource.log;
         }
 
-        [HarmonyPatch("OnPlayerConnectedClientRpc")]
+        [HarmonyPatch("OnClientConnect")]
         [HarmonyPostfix]
         static void FollowHostConfigurationPatch(StartOfRound __instance, ulong clientId)
         {
             try
             {
-                if (clientId == 0)
+                if (__instance.IsHost)
                 {
-                   commanderSource.NetworkHandler.SetHost();
+                    //Sync Configs
+                    logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
+                    commanderSource.NetworkHandler.SyncConfigs();
                 }
-                //Sync Configs
-                logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
-                commanderSource.NetworkHandler.SyncConfigs();
-
             }
             catch (Exception ex)
             {
