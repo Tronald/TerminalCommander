@@ -30,7 +30,7 @@ namespace TerminalCommander.Patches
             try
             {
                 //Sync Configs
-                logSource.LogInfo($"{Commander.modName} syncing configurations for new player.");
+                logSource.LogInfo($"{Commander.modName} syncing configurations for connected player.");
                 commanderSource.NetworkHandler.SyncConfigs();
 
             }
@@ -40,24 +40,5 @@ namespace TerminalCommander.Patches
                 logSource.LogInfo($"{Commander.modName} GAME MANAGEMENT ERROR (CONFIGS NOT SYNCED): {ex.Message}");
             };
         }
-
-        [HarmonyPatch("PlayerLoadedServerRpc")]
-        [HarmonyPostfix]
-        static void PushHostConfigurationPatch(StartOfRound __instance, ulong clientId)
-        {
-            try
-            {
-                //Sync Configs
-                logSource.LogInfo($"{Commander.modName} syncing configurations to server.");
-                commanderSource.NetworkHandler.SyncConfigs();
-
-            }
-            catch (Exception ex)
-            {
-                //Configs not synced
-                logSource.LogInfo($"{Commander.modName} GAME MANAGEMENT ERROR (CONFIGS NOT SYNCED TO SERVER): {ex.Message}");
-            };
-        }
-
     }
 }
