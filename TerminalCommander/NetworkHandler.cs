@@ -20,9 +20,12 @@ namespace TerminalCommander
             Instance = this;
         }
 
-        public void SyncConfigs(TerminalCommanderConfiguration config)
+        public void SyncConfigs()
         {
-            SyncConfigsServerRpc(config);
+            if (IsServer)
+            {
+                SyncConfigsServerRpc(commander.Configs);
+            }
         }
 
         [ClientRpc]
