@@ -11,18 +11,27 @@ namespace TerminalCommander
     {
         public static NetworkHandler Instance;
         private Commander commander;
+        private bool isHost = false;
         public NetworkHandler(Commander c)
         {
             commander = c;
-        }
+        }      
         private void Awake()
         {
             Instance = this;
         }
+        public void SetHost()
+        {
+
+            commander.log.LogInfo($"Setting as host.");
+            isHost = true;
+
+        }
 
         public void SyncConfigs()
         {
-            if (IsServer)
+            commander.log.LogInfo($"Client SyncConfigs Called SERVER: {isHost}");
+            if (isHost)
             {
                 SyncConfigsServerRpc(commander.Configs);
             }

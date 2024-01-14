@@ -40,5 +40,20 @@ namespace TerminalCommander.Patches
                 logSource.LogInfo($"{Commander.modName} GAME MANAGEMENT ERROR (CONFIGS NOT SYNCED): {ex.Message}");
             };
         }
+        [HarmonyPatch("PlayerLoadedServerRpc")]
+        [HarmonyPostfix]
+        static void SetHostPatch()
+        {
+            try
+            {
+                commanderSource.NetworkHandler.SetHost();
+            }
+            catch (Exception ex)
+            {
+
+                logSource.LogError($"Could not set as host: {ex.Message}");
+            };
+        }
     }
+
 }
