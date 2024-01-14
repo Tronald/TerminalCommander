@@ -23,13 +23,13 @@ namespace TerminalCommander.Patches
             logSource = commanderSource.log;
         }
 
-        [HarmonyPatch("OnClientConnect")]
+        [HarmonyPatch("OnPlayerConnectedClientRpc")]
         [HarmonyPostfix]
         static void FollowHostConfigurationPatch(StartOfRound __instance, ulong clientId)
         {
             try
             {
-                if (!__instance.IsServer)
+                if (__instance.IsServer)
                 {
                     return;
                 }

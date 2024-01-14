@@ -28,20 +28,22 @@ namespace TerminalCommander
             }
             else
             {
-                SynConfigsServerRpc(config);
+                SyncConfigsServerRpc(config);
             }
         }
 
         [ClientRpc]
         private void SyncConfigsClientRpc(TerminalCommanderConfiguration config)
         {
-            //Sets gameplay configs to match host rules.
-            commander.Configs.Set_Configs(config); 
+            commander.log.LogInfo($"Client Configs Received: {config.AllowJamming} {config.AllowBigDoors}");
+            //Sets gameplay configs to match host rules.        
+            commander.Configs.Set_Configs(config);     
         }
 
         [ServerRpc]
-        private void SynConfigsServerRpc(TerminalCommanderConfiguration config)
+        private void SyncConfigsServerRpc(TerminalCommanderConfiguration config)
         {
+            commander.log.LogInfo($"Server Configs Sent: {config.AllowJamming} {config.AllowBigDoors}");
             SyncConfigsClientRpc(config);
         }
     }

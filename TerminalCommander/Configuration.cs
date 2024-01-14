@@ -1,9 +1,9 @@
-﻿using BepInEx;
-using System.Diagnostics.Eventing.Reader;
+﻿using System;
 
 namespace TerminalCommander
 {
-    public class TerminalCommanderConfiguration
+    [Serializable]
+    public class TerminalCommanderConfiguration 
     {
         public bool AllowJamming { get; set; }
         public bool AllowBigDoors { get; set; }
