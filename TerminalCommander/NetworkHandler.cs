@@ -22,14 +22,7 @@ namespace TerminalCommander
 
         public void SyncConfigs(TerminalCommanderConfiguration config)
         {
-            if (IsServer)
-            {
-                SyncConfigsClientRpc(config);
-            }
-            else
-            {
-                SyncConfigsServerRpc(config);
-            }
+            SyncConfigsServerRpc(config);
         }
 
         [ClientRpc]
