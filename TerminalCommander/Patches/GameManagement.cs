@@ -31,7 +31,7 @@ namespace TerminalCommander.Patches
             {
                 //Sync Configs
                 logSource.LogInfo($"{Commander.modName} syncing configurations for new player.");
-                commanderSource.NetworkHandler.SyncConfigs(commanderSource.Configs);
+                commanderSource.NetworkHandler.SyncConfigs();
 
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace TerminalCommander.Patches
             {
                 //Sync Configs
                 logSource.LogInfo($"{Commander.modName} syncing configurations to server.");
-                commanderSource.NetworkHandler.SyncConfigs(commanderSource.Configs);
+                commanderSource.NetworkHandler.SyncConfigs();
 
             }
             catch (Exception ex)
