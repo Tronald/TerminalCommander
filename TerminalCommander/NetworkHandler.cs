@@ -22,22 +22,22 @@ namespace TerminalCommander
         }
         public void SyncConfigs()
         {
-            SyncConfigsServerRpc(commander.Configs);           
+            SyncConfigsServerRpc(commander.Configs.AllowJamming, commander.Configs.AllowBigDoors);           
         }
 
         [ClientRpc]
-        private void SyncConfigsClientRpc(TerminalCommanderConfiguration config)
+        private void SyncConfigsClientRpc(bool jam, bool door)
         {
-            commander.log.LogInfo($"Client Configs Received: {config.AllowJamming} {config.AllowBigDoors}");
+            commander.log.LogInfo($"Client Configs Received: {jam} {door}");
             //Sets gameplay configs to match host rules.        
-            commander.Configs.Set_Configs(config);     
+            commander.Configs.AllowBigDoors = door;
+            commander.Configs.AllowJamming = jam;
         }
 
         [ServerRpc]
-        private void SyncConfigsServerRpc(TerminalCommanderConfiguration config)
+        private void SyncConfigsServerRpc(bool jam, bool door)
         {
-            commander.log.LogInfo($"Server Configs Sent: {config.AllowJamming} {config.AllowBigDoors}");
-            SyncConfigsClientRpc(config);
+            SyncConfigsClientRpc(jam,door);
         }
     }
 }
