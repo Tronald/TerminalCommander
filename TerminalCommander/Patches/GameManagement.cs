@@ -29,8 +29,12 @@ namespace TerminalCommander.Patches
         {
             try
             {
+                if (clientId == 0)
+                {
+                   commanderSource.NetworkHandler.SetHost();
+                }
                 //Sync Configs
-                logSource.LogInfo($"{Commander.modName} syncing configurations for connected player.");
+                logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
                 commanderSource.NetworkHandler.SyncConfigs();
 
             }
@@ -40,20 +44,7 @@ namespace TerminalCommander.Patches
                 logSource.LogInfo($"{Commander.modName} GAME MANAGEMENT ERROR (CONFIGS NOT SYNCED): {ex.Message}");
             };
         }
-        [HarmonyPatch("PlayerLoadedServerRpc")]
-        [HarmonyPostfix]
-        static void SetHostPatch()
-        {
-            try
-            {
-                commanderSource.NetworkHandler.SetHost();
-            }
-            catch (Exception ex)
-            {
-
-                logSource.LogError($"Could not set as host: {ex.Message}");
-            };
-        }
+       
     }
 
 }

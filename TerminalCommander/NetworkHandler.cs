@@ -18,6 +18,11 @@ namespace TerminalCommander
         }      
         private void Awake()
         {
+            if(IsServer)
+            {
+                isHost = true;
+            }
+            commander.log.LogInfo($"IS HOST {isHost}.");
             Instance = this;
         }
         public void SetHost()
