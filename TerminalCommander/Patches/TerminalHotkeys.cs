@@ -106,6 +106,11 @@ namespace TerminalCommander.Patches
         }
         static void OperateBigDoors(Terminal t)
         {
+            if(!commanderSource.Configs.AllowBigDoors)
+            {
+                SetTerminalText(t, "This command has been disabled by the company.\n\n");
+                return;
+            }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
                                                select x).ToArray();
 
@@ -145,6 +150,12 @@ namespace TerminalCommander.Patches
         }          
         static void JamTurrentMines(Terminal t)
         {
+            if (!commanderSource.Configs.AllowJamming)
+            {
+                SetTerminalText(t, "This command has been disabled by the company.\n\n");
+                return;
+            }
+
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
                                                select x).ToArray();
 

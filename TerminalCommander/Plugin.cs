@@ -32,17 +32,17 @@ namespace TerminalCommander
             log = BepInEx.Logging.Logger.CreateLogSource(modGUID);
             log.LogInfo($"{modName} is loaded!");
 
-            //Configs.Set_Configs(this);
-            //NetworkHandler = new NetworkHandler(this);         
+            Configs.Set_Configs(this);
+            NetworkHandler = new NetworkHandler(this);         
 
             TerminalHotkeys.SetSource(this);
             TerminalCommands.SetSource(this);
-            //GameManagement.SetSource(this);
+            GameManagement.SetSource(this);
 
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalHotkeys));
             harmony.PatchAll(typeof(TerminalCommands));
-            //harmony.PatchAll(typeof(GameManagement));
+            harmony.PatchAll(typeof(GameManagement));
         }      
     }    
 }
