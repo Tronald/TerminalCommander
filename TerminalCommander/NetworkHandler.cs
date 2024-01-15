@@ -23,10 +23,9 @@ namespace TerminalCommander
         }
         public void SyncConfigs()
         {
-            if (IsOwner)
-            {
-                SyncConfigsClientRpc(commander.Configs);
-            }
+            
+             SyncConfigsServerRpc();
+            
            
         }     
 
@@ -39,6 +38,13 @@ namespace TerminalCommander
             commander.Configs.AllowBigDoors = configs.AllowBigDoors;
             commander.Configs.AllowJamming = configs.AllowJamming;
         }
-  
+        [ServerRpc]
+        private void SyncConfigsServerRpc()
+        {
+            SyncConfigsClientRpc(commander.Configs);
+            commander.log.LogInfo($"Client Configs Sent");
+
+          
+        }
     }
 }
