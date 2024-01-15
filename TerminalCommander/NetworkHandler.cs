@@ -19,43 +19,35 @@ namespace TerminalCommander
         }      
         private void Awake()
         {
-            commander.log.LogInfo("AWAKENING NETWORKHANDLER");
             Instance = this;
         }
         public void SyncConfigs()
         {
-            SyncConfigsServerRpc(commander.Configs.AllowJamming, commander.Configs.AllowBigDoors);           
-        }
+            if (IsOwner)
+            {
+                SyncConfigsClientRpc(commander.Configs);
+            }
+            else
+            {
+                SyncConfigsServerRpc();
+            }
+        }     
 
         [ClientRpc]
-        private void SyncConfigsClientRpc(bool jam, bool door)
+        private void SyncConfigsClientRpc(TerminalCommanderConfiguration configs)
         {
-            commander.log.LogInfo($"Client Configs Received: {jam} {door}");
+            commander.log.LogInfo($"Client Configs Received");
+
             //Sets gameplay configs to match host rules.        
-            commander.Configs.AllowBigDoors = door;
-            commander.Configs.AllowJamming = jam;
+            commander.Configs.AllowBigDoors = configs.AllowBigDoors;
+            commander.Configs.AllowJamming = configs.AllowJamming;
         }
 
-        [ServerRpc]
-        private void SyncConfigsServerRpc(bool jam, bool door)
+        [ServerRpc(RequireOwnership=false)]
+        private void SyncConfigsServerRpc()
         {
-            SyncConfigsClientRpc(jam,door);
+            SyncConfigsClientRpc(commander.Configs);
         }
-
-        public void ForceWake()
-        {
-            WakeServerRpc(true);
-        }
-
-        [ServerRpc]
-        private void WakeServerRpc(bool t)
-        {
-            commander.log.LogInfo($"Waking NetworkHandler");
-        }
-        [ClientRpc]
-        private void WakeClientRpc(bool t)
-        {
-            WakeClientRpc(t);
-        }
+      
     }
 }

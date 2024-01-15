@@ -29,13 +29,10 @@ namespace TerminalCommander.Patches
         {
             try
             {
-                commanderSource.NetworkHandler.ForceWake();
-                if (__instance.IsHost)
-                {
-                    //Sync Configs
-                    logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
-                    commanderSource.NetworkHandler.SyncConfigs();
-                }
+                //Sync Configs
+                logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
+                commanderSource.NetworkHandler.SyncConfigs();
+
             }
             catch (Exception ex)
             {
