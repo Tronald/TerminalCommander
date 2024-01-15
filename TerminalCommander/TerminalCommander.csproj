@@ -93,6 +93,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
-xcopy /y "$(TargetDir)TerminalApi.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"</PostBuildEvent>
+xcopy /y "$(TargetDir)TerminalApi.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
+xcopy /y "$(TargetDir)LethalNetworkAPI.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
