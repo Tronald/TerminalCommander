@@ -27,10 +27,7 @@ namespace TerminalCommander
             {
                 SyncConfigsClientRpc(commander.Configs);
             }
-            else
-            {
-                SyncConfigsServerRpc();
-            }
+           
         }     
 
         [ClientRpc]
@@ -42,12 +39,6 @@ namespace TerminalCommander
             commander.Configs.AllowBigDoors = configs.AllowBigDoors;
             commander.Configs.AllowJamming = configs.AllowJamming;
         }
-
-        [ServerRpc(RequireOwnership=false)]
-        private void SyncConfigsServerRpc()
-        {
-            SyncConfigsClientRpc(commander.Configs);
-        }
-      
+  
     }
 }

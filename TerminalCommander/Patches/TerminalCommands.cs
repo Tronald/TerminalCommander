@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace TerminalCommander.Patches
 {
@@ -48,6 +49,11 @@ namespace TerminalCommander.Patches
             {
                 Category = "Commander",
                 DisplayTextSupplier = InverseTeleportCommand
+            });
+            AddCommand("sync", new CommandInfo
+            {
+                Category = "Commander",
+                DisplayTextSupplier = SyncCommand
             });
         }
         private static string OnHotKeyHelpCommand()
@@ -130,6 +136,13 @@ namespace TerminalCommander.Patches
 
             }
             return "Nuh uh, no inverse teleporter\n\n";
+        }
+
+        private static string SyncCommand()
+        {
+            commanderSource.NetworkHandler.SyncConfigs();
+            return "Synced...\n\n";
+            
         }
 
     }
