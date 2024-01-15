@@ -18,17 +18,16 @@ namespace TerminalCommander.Patches
     {
         private static ManualLogSource logSource; // Log source field
         private static Commander commanderSource;
-        private static LethalClientMessage<TerminalCommanderConfiguration> customClientMessage = new LethalClientMessage<TerminalCommanderConfiguration>("config");
-
+        private static LethalClientMessage<TerminalCommanderConfiguration> clientMessage = new LethalClientMessage<TerminalCommanderConfiguration>("config");
+        private static LethalServerMessage<TerminalCommanderConfiguration> serverMessage = new LethalServerMessage<TerminalCommanderConfiguration>("config");
         // Method to set the log source
         public static void SetSource(Commander source)
         {
             commanderSource = source;
             logSource = commanderSource.log;
-            customClientMessage.OnReceived += CustomClientMessage_OnReceived;
+            clientMessage.OnReceived += CustomClientMessage_OnReceived;
+            serverMessage.OnReceived += ServerMessage_OnReceived;
         }
-
-      
 
         [HarmonyPatch("OnClientConnect")]
         [HarmonyPostfix]
@@ -39,7 +38,7 @@ namespace TerminalCommander.Patches
                 if(__instance.IsHost)
                 {
                     logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
-                    customClientMessage.SendServer(commanderSource.Configs);
+                    serverMessage.SendAllClients(commanderSource.Configs);
                 }
 
                 //Sync Configs
@@ -58,6 +57,11 @@ namespace TerminalCommander.Patches
             logSource.LogInfo($"{Commander.modName} syncing configurations.");
             commanderSource.Configs.AllowBigDoors = obj.AllowBigDoors;
             commanderSource.Configs.AllowJamming = obj.AllowJamming;
+        }
+
+        private static void ServerMessage_OnReceived(TerminalCommanderConfiguration arg1, ulong arg2)
+        {
+            clientMessage.SendServer(commanderSource.Configs);
         }
     }
 
