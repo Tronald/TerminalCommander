@@ -46,3 +46,8 @@
 
 - Adds teleport "tp" command.
 - Adds inverse teleport "itp" command. 
+
+## 1.8.0
+
+-Adds ability for host to disable and/or add cooldown times to certain features such as jamming and door control.
+-Adds ability to rebind hotkeys.

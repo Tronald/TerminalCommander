@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace TerminalCommander.Patches
 {
@@ -48,7 +49,7 @@ namespace TerminalCommander.Patches
             {
                 Category = "Commander",
                 DisplayTextSupplier = InverseTeleportCommand
-            });
+            });          
         }
         private static string OnHotKeyHelpCommand()
         {
@@ -63,7 +64,7 @@ namespace TerminalCommander.Patches
                 ">ITP\nActivate inverse teleporter.\n\n";
 
         }
-        private static string TeleportCommand()
+        public static string TeleportCommand()
         {
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
             if (teleporters!=null && teleporters.Length > 0)
@@ -87,7 +88,7 @@ namespace TerminalCommander.Patches
         /// in game
         /// </summary>
         /// <returns>string</returns>
-        private static string EntranceTeleportCommand()
+        public static string EntranceTeleportCommand()
         {
 
             EntranceTeleport[] inverseteleporters = UnityEngine.Object.FindObjectsOfType<EntranceTeleport>();
@@ -102,7 +103,7 @@ namespace TerminalCommander.Patches
                 return "Teleporting...\n\n";
             }
         }
-        private static string InverseTeleportCommand()
+        public static string InverseTeleportCommand()
         {
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
             if (teleporters != null && teleporters.Length > 0)
@@ -117,10 +118,10 @@ namespace TerminalCommander.Patches
                     if (!StartOfRound.Instance.shipHasLanded)
                     {
                         return "Cannot inverse teleport until ship has fully landed and stabilized.\n\n";
-                    }                
+                    }
                     FieldInfo cooldownTime = teleporter.GetType().GetField("cooldownTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                     float cooldown = (float)cooldownTime.GetValue(teleporter);
-                  if(cooldown > 0)
+                    if (cooldown > 0)
                     {
                         return $"Cooldown time for inverse teleporter: {Math.Round(cooldown)} seconds.\n\n";
                     }
@@ -131,6 +132,5 @@ namespace TerminalCommander.Patches
             }
             return "Nuh uh, no inverse teleporter\n\n";
         }
-
     }
 }

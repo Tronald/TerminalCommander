@@ -40,9 +40,8 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="LethalConfig, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\LethalConfig.dll</HintPath>
+    <Reference Include="LethalNetworkAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xilophor.LethalNetworkAPI.1.1.3\lib\net472\LethalNetworkAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,8 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="NetworkHandler.cs" />
     <Compile Include="Patches\GameManagement.cs" />
+    <Compile Include="Patches\RoundManager.cs" />
     <Compile Include="Patches\TerminalCommands.cs" />
     <Compile Include="Patches\TerminalHotkeys.cs" />
     <Compile Include="Plugin.cs" />
@@ -95,7 +94,6 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
 xcopy /y "$(TargetDir)TerminalApi.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"
-xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Thunderstore\config"
-xcopy /y "$(TargetDir)TerminalCommander.dll" "C:\Users\Justi\source\repos\TerminalCommander\Thunderstore\plugins"</PostBuildEvent>
+xcopy /y "$(TargetDir)LethalNetworkAPI.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

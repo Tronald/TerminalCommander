@@ -6,7 +6,11 @@
 
 Terminal Commander is a mod for Lethal Company designed to enhance your terminal operation experience by introducing convenient hotkeys. This mod simplifies various tasks, allowing you to manage turrets, landmines, player views, and communication more efficiently.
 
+*This mod is vanilla compatible*
+
 ## Hotkey Features
+
+*All hotkeys may be reconfigured via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit keybinds, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.**
 
 | Feature                          | Hotkey Command                 | Description                                                                                            |
 |----------------------------------|----------------------|--------------------------------------------------------------------------------------------------------|
@@ -15,6 +19,8 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | Quickly View Monitor              | <kbd>Ctrl</kbd>+<kbd>M</kbd> | Quickly view or close the monitor within the terminal.                                                  |
 | Fast Player View Switch           | <kbd>Ctrl</kbd>+<kbd>S</kbd> | Swiftly switch between different players on the monitor, providing you with a dynamic perspective.     |
 | Quick Transmit                    | <kbd>Ctrl</kbd>+<kbd>T</kbd> | **Requirements:** Signal Translator <br> Simplify communication by automatically entering the "transmit" command. You only need to type in your message. |
+| Teleport                    | <kbd>Ctrl</kbd>+<kbd>W</kbd> | **Requirements:** Teleporter <br> Triggers the teleporter. |
+| Inverse Teleport                    | <kbd>Ctrl</kbd>+<kbd>I</kbd> | **Requirements:** Inverse Teleporter <br> Starts the inverse teleporter. |
 
 ## Command Features
 
@@ -24,7 +30,18 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 |"tp"| Teleport player currently viewed on the terminal monitor. |
 | "itp" | Activates the inverse teleporter.|
 
+## Gameplay Settings
+
+*Gameplay settings may be adjusted via the configuration file. These settings are designed to allow hosts to set server wide rules regarding the use of Terminal Commander. It is recommended that you use a configuration editor mod such as LethalConfig to edit these settings, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.*
+
+| Setting                         | Description                                                                                            |
+|----------------------------------|--------------------------------------------------------------------------------------------------------|
+| "Allow jamming"    | Is player allowed to use the turrent/mine jammer command.           |
+| "Allow door control"| Is player allowed to use the open/close all facility doors command. |
+| "Jamming cool down" | Cool down time in seconds that the player must wait before reusing the turrent/mine jammer command.|
+| "Door control cooldown" | Cool down time in seconds that the player must wait before reusing the open/close all facility doors command.|
+
 ## Contributors
 
 * Tronald
-* Sophie G
+* CatJamSoph
