@@ -32,7 +32,9 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 
 ## Gameplay Settings
 
-*Gameplay settings may be adjusted via the configuration file. These settings are designed to allow hosts to set server wide rules regarding the use of Terminal Commander. It is recommended that you use a configuration editor mod such as LethalConfig to edit these settings, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.*
+*Gameplay settings may be adjusted via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit these settings, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.*
+
+**NOTE: Host settings do not apply to clients as of this time, as the network API is currently broken. This will be fixed later.**
 
 | Setting                         | Description                                                                                            |
 |----------------------------------|--------------------------------------------------------------------------------------------------------|

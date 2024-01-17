@@ -3,8 +3,6 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using TerminalCommander.Patches;
-using BepInEx.Bootstrap;
-using System.Security.Cryptography;
 using System;
 
 
@@ -15,7 +13,7 @@ namespace TerminalCommander
     {
         public const string modGUID = "Tronald.TerminalCommander";
         public const string modName = "TerminalCommander";
-        public const string modVersion = "1.8.0";
+        public const string modVersion = "1.8.1";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
@@ -41,14 +39,14 @@ namespace TerminalCommander
 
             TerminalHotkeys.SetSource(this);
             TerminalCommands.SetSource(this);
-            GameManagement.SetSource(this);
+            //GameManagement.SetSource(this);
             RoundManagerPatch.SetSource(this);
 
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalHotkeys));
             harmony.PatchAll(typeof(TerminalCommands));
-            harmony.PatchAll(typeof(GameManagement));
-            harmony.PatchAll(typeof (RoundManagerPatch));
+            //harmony.PatchAll(typeof(GameManagement));
+            harmony.PatchAll(typeof(RoundManagerPatch));
         }      
     }    
 }
