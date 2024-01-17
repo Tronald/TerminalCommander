@@ -2,14 +2,6 @@
 using HarmonyLib;
 using LethalNetworkAPI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using TerminalApi.Classes;
-using Unity.Netcode;
 
 namespace TerminalCommander.Patches
 {
@@ -40,27 +32,23 @@ namespace TerminalCommander.Patches
                     logSource.LogInfo($"{Commander.modName} syncing configurations for connected player: clientId {clientId}.");
                     serverMessage.SendAllClients(commanderSource.Configs);
                 }
-
-                //Sync Configs
-             
-               // commanderSource.NetworkHandler.SyncConfigs();
-
             }
             catch (Exception ex)
             {
                 //Configs not synced
-                logSource.LogInfo($"{Commander.modName} GAME MANAGEMENT ERROR (CONFIGS NOT SYNCED): {ex.Message}");
+                logSource.LogError($"GAME MANAGEMENT ERROR (CONFIGS NOT SYNCED): {ex.Message}");
             };
         }
         private static void CustomClientMessage_OnReceived(TerminalCommanderConfiguration obj)
         {
-            logSource.LogInfo($"{Commander.modName} syncing configurations.");
+            logSource.LogInfo($"Host configurations received.");
             commanderSource.Configs.AllowBigDoors = obj.AllowBigDoors;
             commanderSource.Configs.AllowJamming = obj.AllowJamming;
         }
 
         private static void ServerMessage_OnReceived(TerminalCommanderConfiguration arg1, ulong arg2)
         {
+            logSource.LogInfo($"Sending host configurations to clients.");
             clientMessage.SendServer(commanderSource.Configs);
         }
     }

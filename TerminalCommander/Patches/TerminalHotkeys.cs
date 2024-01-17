@@ -50,39 +50,49 @@ namespace TerminalCommander.Patches
                     }
                     //Switch Hot Key
                     //Executes a monitor switch
-                    if (BepInEx.UnityInput.Current.GetKeyDown(UnityEngine.KeyCode.S))
+                    if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.SwitchKey))
                     {
                         SwitchPlayer(t);
                     }
                     //Transmit Hot Key
                     //Executes transmit text
-                    else if (BepInEx.UnityInput.Current.GetKeyDown(UnityEngine.KeyCode.T))
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.TransmitKey))
                     {
                         Transmission(t, ___screenText);
                     }
                     //Doors Hot Key
                     //Open / Close all doors
-                    else if (BepInEx.UnityInput.Current.GetKeyDown(UnityEngine.KeyCode.D))
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.DoorKey))
                     {
                        OperateBigDoors(t);
                     }
                     //Jamming Hot Key
                     //Disable all turrets and mines
-                    else if (BepInEx.UnityInput.Current.GetKeyDown(UnityEngine.KeyCode.J))
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.JammingKey))
                     {
                         JamTurrentMines(t);
                     }
                     //View Monitor Hot Key
                     //Quickly turn on and off monitor
-                    else if (BepInEx.UnityInput.Current.GetKeyDown(UnityEngine.KeyCode.M))
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.MonitorKey))
                     {
                         ViewMonitor(t);             
+                    }
+                    //Teleporter Hot Key
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.TeleportKey))
+                    {
+                        SetTerminalText(t, TerminalCommands.TeleportCommand());
+                    }
+                    //Inverse Teleport Hot Key
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.InverseTeleportKey))
+                    {
+                        SetTerminalText(t, TerminalCommands.InverseTeleportCommand());
                     }
                 }
             }
             catch(Exception ex)
             {
-                logSource.LogInfo($"{Commander.modName} ERROR: {ex.Message}");
+                logSource.LogError($"{ex.Message}");
             }
         }
 
@@ -106,9 +116,16 @@ namespace TerminalCommander.Patches
         }
         static void OperateBigDoors(Terminal t)
         {
+            DateTime d = DateTime.Now.AddSeconds(-commanderSource.Configs.BigDoorsCoolDown);
             if(!commanderSource.Configs.AllowBigDoors)
             {
                 SetTerminalText(t, "This command has been disabled by the company.\n\n");
+                return;
+            }
+            if(d < commanderSource.LastDoorEvent)
+            {
+                var ts = commanderSource.LastDoorEvent - d;
+                SetTerminalText(t, $"Door signal cool down time remaining: {Math.Round(ts.TotalSeconds)} seconds.\n\n");
                 return;
             }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
@@ -123,10 +140,12 @@ namespace TerminalCommander.Patches
                 tao.SetDoorLocalClient(openDoors);
             }
 
-            if (openDoors)
+            //Always open on start
+            if (openDoors || commanderSource.StartOfRound)
             {
                 SetTerminalText(t, "Opening all doors\n\n");
                 openDoors = false;
+                commanderSource.StartOfRound = false;
             }
             else
             {
@@ -135,27 +154,27 @@ namespace TerminalCommander.Patches
             }
             t.terminalAudio.PlayOneShot(t.codeBroadcastSFX, 1f);
             t.codeBroadcastAnimator.SetTrigger("display");
+
+            commanderSource.LastDoorEvent = DateTime.Now;
+
             logSource.LogInfo($"{Commander.modName} TerminalAccessibleObjects Called: Count{taos.Count()} - ({string.Join(", ", items)})");
         }
-        static void SetTerminalText(Terminal t, string s)
-        {
-            TerminalNode tn = new TerminalNode();
-            tn.clearPreviousText = true;
-            tn.acceptAnything = false;
-            tn.displayText = s;
-            t.LoadNewNode(tn);
-
-            t.screenText.ActivateInputField();
-            ((Selectable)t.screenText).Select();
-        }          
+     
         static void JamTurrentMines(Terminal t)
         {
+            DateTime d = DateTime.Now.AddSeconds(-commanderSource.Configs.JammingCoolDown);
+
             if (!commanderSource.Configs.AllowJamming)
             {
                 SetTerminalText(t, "This command has been disabled by the company.\n\n");
                 return;
             }
-
+            if (d < commanderSource.LastJamEvent)
+            {
+                var ts = commanderSource.LastJamEvent - d;
+                SetTerminalText(t, $"Jammer cool down time remaining: {Math.Round(ts.TotalSeconds)} seconds.\n\n");
+                return;
+            }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
                                                select x).ToArray();
 
@@ -173,6 +192,8 @@ namespace TerminalCommander.Patches
             t.terminalAudio.PlayOneShot(t.codeBroadcastSFX, 1f);
             t.codeBroadcastAnimator.SetTrigger("display");
 
+            commanderSource.LastJamEvent = DateTime.Now;
+
             logSource.LogInfo($"{Commander.modName} TerminalAccessibleObjects Called: Count{taos.Count()} - ({string.Join(", ", items)})");
         }
         static void ViewMonitor(Terminal t)
@@ -184,7 +205,17 @@ namespace TerminalCommander.Patches
 
             t.OnSubmit();
         }
-       
+        static void SetTerminalText(Terminal t, string s)
+        {
+            TerminalNode tn = ScriptableObject.CreateInstance<TerminalNode>();
+            tn.clearPreviousText = true;
+            tn.acceptAnything = false;
+            tn.displayText = s;
+            t.LoadNewNode(tn);
+
+            t.screenText.ActivateInputField();
+            ((Selectable)t.screenText).Select();
+        }
         static T FindActiveObject<T>() where T : UnityEngine.Object
         {
             T[] unityObjects = UnityEngine.Object.FindObjectsOfType<T>();

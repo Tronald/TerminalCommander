@@ -77,8 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="NetworkHandler.cs" />
     <Compile Include="Patches\GameManagement.cs" />
+    <Compile Include="Patches\RoundManager.cs" />
     <Compile Include="Patches\TerminalCommands.cs" />
     <Compile Include="Patches\TerminalHotkeys.cs" />
     <Compile Include="Plugin.cs" />
