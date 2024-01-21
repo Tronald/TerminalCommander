@@ -25,7 +25,7 @@ namespace TerminalCommander.Patches
         {
             try
             {
-                if (!commanderSource.Configs.SyncHost) { return; } // Host has disable gameplay sync
+                if (!commanderSource.Configs.SyncHost) { return; } // Host has disabled gameplay sync
 
                 commanderSource.StartOfRound = true;
                 commanderSource.LastJamEvent = new DateTime();

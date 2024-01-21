@@ -13,6 +13,7 @@ using UnityEngine;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GameNetcodeStuff;
+using System.Collections;
 
 namespace TerminalCommander.Patches
 {
@@ -160,6 +161,7 @@ namespace TerminalCommander.Patches
 
                     if (!StartOfRound.Instance.shipHasLanded)
                     {
+                        t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                         return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
                     }
                     float amt = teleporter.cooldownAmount;
@@ -168,11 +170,11 @@ namespace TerminalCommander.Patches
                         //Skip person who called emergency tp              
                         // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
                         // {
-                        commanderSource.log.LogInfo($"Emergency teleporting: {player.Value}");
-                        teleporter.PressTeleportButtonOnLocalClient();
-                        teleporter.cooldownAmount = 0f;
+                       
+                        var et = new GameObject().AddComponent<EmergencyTeleporter>();
+                        et.StartTeleporter(teleporter);
                         // }
-                        StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(true);
+                      
 
                     }
                     teleporter.cooldownAmount = amt;
@@ -185,7 +187,6 @@ namespace TerminalCommander.Patches
             t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
             return "Nuh uh, no teleporter\n\n";
         }
-
         static T FindActiveObject<T>() where T : UnityEngine.Object
         {
             T[] unityObjects = UnityEngine.Object.FindObjectsOfType<T>();
@@ -200,4 +201,5 @@ namespace TerminalCommander.Patches
             return null;
         }
     }
+    
 }
