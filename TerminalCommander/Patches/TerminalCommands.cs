@@ -165,19 +165,15 @@ namespace TerminalCommander.Patches
                         return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
                     }
                     float amt = teleporter.cooldownAmount;
-                    foreach (var player in StartOfRound.Instance.ClientPlayerList)
-                    {
+                 
                         //Skip person who called emergency tp              
                         // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
                         // {
                        
                         var et = new GameObject().AddComponent<EmergencyTeleporter>();
-                        et.StartTeleporter(teleporter);
-                        // }
-                      
+                        et.StartTeleporter(commanderSource, t, teleporter);
 
-                    }
-                    teleporter.cooldownAmount = amt;
+                   
                     t.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
 
                     return "Emergency teleporting all players...\n\n";

@@ -36,15 +36,13 @@ namespace TerminalCommander
             LoadAudio(AudioItem.Emergency);
         }
 
-        private void LoadAudio(AudioItem t)
+        private async void LoadAudio(AudioItem t)
         {
             using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(getAudioPath(t), AudioType.WAV))
             {
                 uwr.SendWebRequest();
-                while(!uwr.isDone)
-                {
+                while (!uwr.isDone) { }
 
-                }
                 if (uwr.error!=null)
                 {
                     Debug.LogError(uwr.error);
