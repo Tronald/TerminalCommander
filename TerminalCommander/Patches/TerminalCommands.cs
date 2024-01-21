@@ -147,11 +147,14 @@ namespace TerminalCommander.Patches
         }
         public static string EmergencyTeleportCommand()
         {
+            if(!commanderSource.Configs.AllowEmergencyTeleporter)
+            {
+                return "Emergency teleport has been disabled by the company.\n\n";
+            }
             Terminal t = FindActiveObject<Terminal>();
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
             if (teleporters != null && teleporters.Length > 0)
             {
-
                 foreach (ShipTeleporter teleporter in teleporters)
                 {
                     if (teleporter.isInverseTeleporter)

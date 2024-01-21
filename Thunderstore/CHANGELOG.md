@@ -67,4 +67,10 @@
 - Remaps audio to account for Thunderstore path.
 - Fixes Readme.
 
+## 1.9.2
+
+- Fixes emergency teleport user configuration.
+- Updates Readme.
+
+
 
