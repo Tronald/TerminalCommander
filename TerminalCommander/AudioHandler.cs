@@ -30,6 +30,7 @@ namespace TerminalCommander
 
         void Start()
         {
+            Debug.Log($"AudioHandler Starting");
             LoadAudio();
         }
         public void LoadAudio()

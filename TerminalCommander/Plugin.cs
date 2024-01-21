@@ -58,7 +58,8 @@ namespace TerminalCommander
         
         void Start()
         {
-            Audio = gameObject.AddComponent<AudioManager>();
+            Debug.Log($"Attempting to start AudioManager");
+            Audio = gameObject.AddComponent<AudioManager>();     
         }
         
     }    
