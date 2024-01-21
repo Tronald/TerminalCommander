@@ -21,7 +21,7 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | Quick Transmit                    | <kbd>Ctrl</kbd>+<kbd>T</kbd> | **Requirements:** Signal Translator <br> Simplify communication by automatically entering the "transmit" command. You only need to type in your message. |
 | Teleport                    | <kbd>Ctrl</kbd>+<kbd>W</kbd> | **Requirements:** Teleporter <br> Triggers the teleporter. |
 | Inverse Teleport                    | <kbd>Ctrl</kbd>+<kbd>I</kbd> | **Requirements:** Inverse Teleporter <br> Starts the inverse teleporter. |
-| Emergency Teleport                    | <kbd>Ctrl</kbd>+<kbd>E</kbd> | **Requirements:** Teleporter <br> Teleports all plays back to the ship. Can only be used once per day (experimental, use with caution). |
+| Emergency Teleport                    | <kbd>Ctrl</kbd>+<kbd>E</kbd> | **Requirements:** Teleporter <br> Teleports all players back to the ship. Can only be used once per day (experimental, use with caution). |
 
 ## Command Features
 
