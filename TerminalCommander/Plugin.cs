@@ -5,6 +5,7 @@ using HarmonyLib;
 using TerminalCommander.Patches;
 using UnityEngine;
 using UnityEngine.Networking;
+
 using System;
 
 
@@ -38,29 +39,21 @@ namespace TerminalCommander
             log = BepInEx.Logging.Logger.CreateLogSource(modGUID);
             log.LogInfo($"{modName} is loaded!");
 
-            Configs.Set_Configs(this);           
+            Configs.Set_Configs(this);
 
             TerminalHotkeys.SetSource(this);
             TerminalCommands.SetSource(this);
             RoundManagerPatch.SetSource(this);
             ChatManagerPatch.SetSource(this);
 
+            Audio = new AudioManager();
+            Audio.LoadAudio();
 
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalHotkeys));
-            harmony.PatchAll(typeof(TerminalCommands));          
-            harmony.PatchAll(typeof(RoundManagerPatch));  
+            harmony.PatchAll(typeof(TerminalCommands));
+            harmony.PatchAll(typeof(RoundManagerPatch));
             harmony.PatchAll(typeof(ChatManagerPatch));
-
-           
-
-        }   
-        
-        void Start()
-        {
-            Debug.Log($"Attempting to start AudioManager");
-            Audio = gameObject.AddComponent<AudioManager>();     
         }
-        
     }    
 }

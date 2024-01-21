@@ -74,6 +74,7 @@ namespace TerminalCommander.Patches
         public static string TeleportCommand()
         {
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
+            Terminal t = FindActiveObject<Terminal>();
             if (teleporters!=null && teleporters.Length > 0)
             {           
                
@@ -88,11 +89,12 @@ namespace TerminalCommander.Patches
                 }
                 
             }
-            commanderSource.Audio.PlaySound(AudioItem.Error);
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
             return "Nuh uh, no teleporter\n\n";
         }
         public static string InverseTeleportCommand()
         {
+            Terminal t = FindActiveObject<Terminal>();
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
             if (teleporters != null && teleporters.Length > 0)
             {
@@ -118,7 +120,8 @@ namespace TerminalCommander.Patches
                 }
 
             }
-            commanderSource.Audio.PlaySound(AudioItem.Error);
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+
             return "Nuh uh, no inverse teleporter\n\n";
         }
         /// <summary>
@@ -143,6 +146,7 @@ namespace TerminalCommander.Patches
         }
         public static string EmergencyTeleportCommand()
         {
+            Terminal t = FindActiveObject<Terminal>();
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
             if (teleporters != null && teleporters.Length > 0)
             {
@@ -172,14 +176,28 @@ namespace TerminalCommander.Patches
 
                     }
                     teleporter.cooldownAmount = amt;
-                    commanderSource.Audio.PlaySound(AudioItem.Emergency);
+                    t.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
+
                     return "Emergency teleporting all players...\n\n";
                 }
 
             }
-            commanderSource.Audio.PlaySound(AudioItem.Error);
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
             return "Nuh uh, no teleporter\n\n";
         }
-      
+
+        static T FindActiveObject<T>() where T : UnityEngine.Object
+        {
+            T[] unityObjects = UnityEngine.Object.FindObjectsOfType<T>();
+
+            if (unityObjects.Length > 0)
+            {
+                // For simplicity, just return the first found.
+                //May need to expand later if first object is not desired object.
+                return unityObjects[0];
+            }
+
+            return null;
+        }
     }
 }

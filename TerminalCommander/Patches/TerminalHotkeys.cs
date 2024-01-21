@@ -120,14 +120,14 @@ namespace TerminalCommander.Patches
             if(!commanderSource.Configs.AllowBigDoors)
             {
                 SetTerminalText(t, "This command has been disabled by the company.\n\n");
-                commanderSource.Audio.PlaySound(AudioItem.Error);
+                t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                 return;
             }
             if(d < commanderSource.LastDoorEvent)
             {
                 var ts = commanderSource.LastDoorEvent - d;
                 SetTerminalText(t, $"Door signal cool down time remaining: {Math.Round(ts.TotalSeconds)} seconds.\n\n");
-                commanderSource.Audio.PlaySound(AudioItem.Error);
+                t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                 return;
             }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
@@ -169,14 +169,15 @@ namespace TerminalCommander.Patches
             if (!commanderSource.Configs.AllowJamming)
             {
                 SetTerminalText(t, "This command has been disabled by the company.\n\n");
-                commanderSource.Audio.PlaySound(AudioItem.Error);
+                t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                 return;
             }
             if (d < commanderSource.LastJamEvent)
             {
                 var ts = commanderSource.LastJamEvent - d;
                 SetTerminalText(t, $"Jammer cool down time remaining: {Math.Round(ts.TotalSeconds)} seconds.\n\n");
-                commanderSource.Audio.PlaySound(AudioItem.Error);
+                t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+             
                 return;
             }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
@@ -192,8 +193,7 @@ namespace TerminalCommander.Patches
             }
 
             SetTerminalText(t, "Jamming turrets and land mines\n\n");
-            commanderSource.Audio.PlaySound(AudioItem.Jammer);
-            
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.jammerAudio);
             t.terminalAudio.PlayOneShot(t.codeBroadcastSFX, 1f);
             t.codeBroadcastAnimator.SetTrigger("display");
          
