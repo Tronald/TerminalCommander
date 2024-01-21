@@ -158,18 +158,20 @@ namespace TerminalCommander.Patches
                     {
                         return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
                     }
-
-                    foreach (var player in StartOfRound.Instance.allPlayerScripts)
+                    float amt = teleporter.cooldownAmount;
+                    foreach (var player in StartOfRound.Instance.ClientPlayerList)
                     {
                         //Skip person who called emergency tp              
                         // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
                         // {
-                        commanderSource.log.LogInfo($"Emergency teleporting: {player.playerClientId} {player.name}");
+                        commanderSource.log.LogInfo($"Emergency teleporting: {player.Value}");
                         teleporter.PressTeleportButtonOnLocalClient();
+                        teleporter.cooldownAmount = 0f;
                         // }
-                        StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
+                        StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(true);
 
                     }
+                    teleporter.cooldownAmount = amt;
                     commanderSource.Audio.PlaySound(AudioItem.Emergency);
                     return "Emergency teleporting all players...\n\n";
                 }
