@@ -33,14 +33,12 @@ namespace TerminalCommander
             LoadAudio();
         }
         public void LoadAudio()
-        {
-          
-           
-            
-            Debug.Log($"Loading Audio Clips");
-
+        {  
+            Debug.Log($"Loading {jammerPath}");
             StartCoroutine(LoadAudio(AudioItem.Jammer));
+            Debug.Log($"Loading {errorPath}");
             StartCoroutine(LoadAudio(AudioItem.Error));
+            Debug.Log($"Loading {emergencyPath}");
             StartCoroutine(LoadAudio(AudioItem.Emergency));
         }
 
