@@ -34,8 +34,9 @@ namespace TerminalCommander.Patches
             {
                 if (nameOfUserWhoTyped=="" && chatMessage.StartsWith("tsync") && !RoundManager.Instance.IsHost)
                 {
+                    logSource.LogInfo($"Syncing host configurations {chatMessage}");
                     commanderSource.Configs.Set_Configs(chatMessage.Trim());
-                    logSource.LogInfo($"Syncing host configurations");
+                    
                 }
             }
             catch (Exception ex)

@@ -164,7 +164,7 @@ namespace TerminalCommander.Patches
                         //Skip person who called emergency tp              
                         // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
                         // {
-                        commanderSource.log.LogInfo($"Emergency teleporting: {player.playerClientId}");
+                        commanderSource.log.LogInfo($"Emergency teleporting: {player.playerClientId} {player.name}");
                         teleporter.PressTeleportButtonOnLocalClient();
                         // }
                         StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);

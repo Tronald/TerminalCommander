@@ -58,12 +58,12 @@ namespace TerminalCommander
             if (!regex.IsMatch(hostConfigString)) { return; }
             string[] values = hostConfigString.Replace("tsync", "").Split(':');
 
-            AllowJamming = Convert.ToBoolean(Convert.ToInt16(values[0]));
-            AllowBigDoors = Convert.ToBoolean(Convert.ToInt16(values[1]));
-            AllowEmergencyTeleporter = Convert.ToBoolean(Convert.ToInt16(2));
-            JammingCoolDown = Convert.ToInt32(values[3]);
-            BigDoorsCoolDown = Convert.ToInt32(values[4]);
-            EmergencyTeleporterCoolDown = Convert.ToInt32(values[5]);
+            AllowJamming = Convert.ToBoolean(Convert.ToInt16(values[0][0]));
+            AllowBigDoors = Convert.ToBoolean(Convert.ToInt16(values[0][1]));
+            AllowEmergencyTeleporter = Convert.ToBoolean(Convert.ToInt16(values[0][2]));
+            JammingCoolDown = Convert.ToInt32(values[1]);
+            BigDoorsCoolDown = Convert.ToInt32(values[2]);
+            EmergencyTeleporterCoolDown = Convert.ToInt32(values[3]);
         }
 
         public  string SyncMessage()
