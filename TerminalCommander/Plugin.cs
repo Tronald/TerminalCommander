@@ -45,16 +45,21 @@ namespace TerminalCommander
             RoundManagerPatch.SetSource(this);
             ChatManagerPatch.SetSource(this);
 
-            Audio = gameObject.AddComponent<AudioManager>();
-     
 
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalHotkeys));
             harmony.PatchAll(typeof(TerminalCommands));          
             harmony.PatchAll(typeof(RoundManagerPatch));  
             harmony.PatchAll(typeof(ChatManagerPatch));
+
            
-        }     
+
+        }   
+        
+        void Start()
+        {
+            Audio = gameObject.AddComponent<AudioManager>();
+        }
         
     }    
 }

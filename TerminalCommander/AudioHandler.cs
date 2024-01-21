@@ -28,7 +28,7 @@ namespace TerminalCommander
         private string errorPath = Path.Combine(Paths.BepInExRootPath, "plugins", "TerminalCommander.Audio", "error.wav");
         private string emergencyPath = Path.Combine(Paths.BepInExRootPath, "plugins", "TerminalCommander.Audio", "emergency.wav");
 
-        void Awake()
+        void Start()
         {
             LoadAudio();
         }
@@ -105,27 +105,22 @@ namespace TerminalCommander
         }
         public void PlaySound(AudioItem t)
         {
-           
             if (t == AudioItem.Jammer && jammerAudioSource != null)
             {
-                if (jammerAudioSource == null) { StartCoroutine(LoadAudio(AudioItem.Jammer)); }
                 jammerAudioSource.Play();
-                return;
             }
-            
-            if (t == AudioItem.Error)
+            else if (t == AudioItem.Error && errorAudioSource != null)
             {
-                if (errorAudioSource == null) { StartCoroutine(LoadAudio(AudioItem.Error)); }
                 errorAudioSource.Play();
-                return;
-            }   
-            
-            if(t == AudioItem.Emergency )
+            }       
+            else if(t == AudioItem.Emergency && emergencyAudioSource != null)
             {
-                if (emergencyAudioSource == null) { StartCoroutine(LoadAudio(AudioItem.Emergency)); }
                 emergencyAudioSource.Play();
             }
-            
+            else
+            {
+                Debug.LogError("Audio not loaded. Call LoadAudio() first.");
+            }
         }
       
     }
