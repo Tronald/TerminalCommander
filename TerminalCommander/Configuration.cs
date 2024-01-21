@@ -69,7 +69,7 @@ namespace TerminalCommander
         public  string SyncMessage()
         {
             int aJam = AllowJamming ? 1 : 0;
-            int aBD = AllowJamming ? 1 : 0;
+            int aBD = AllowBigDoors ? 1 : 0;
             int aET = AllowEmergencyTeleporter ? 1 : 0;
             return $"tsync{aJam}{aBD}{aET}:{JammingCoolDown}:{BigDoorsCoolDown}:{EmergencyTeleporterCoolDown}";
         }
