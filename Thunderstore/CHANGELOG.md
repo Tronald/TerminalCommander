@@ -49,17 +49,22 @@
 
 ## 1.8.0
 
--Adds ability for host to disable and/or add cooldown times to certain features such as jamming and door control.
--Adds ability to rebind hotkeys.
+- Adds ability for host to disable and/or add cooldown times to certain features such as jamming and door control.
+- Adds ability to rebind hotkeys.
 
 ## 1.8.1
 
--Remove server calls temporarily. LethalNetworkAPI appears to no longer work with vanilla.
+- Removes server calls temporarily. LethalNetworkAPI appears to no longer work with vanilla.
 
 ## 1.9.0
 
--Fixes sync, allowing host to sync gameplay settings with players.
--Adds audio effects.
--Adds experimental emergency teleport feature. Teleports all players back to ship. Can be used once per day. Use with caution.
+- Fixes sync, allowing host to sync gameplay settings with players.
+- Adds audio effects.
+- Adds experimental emergency teleport feature. Teleports all players back to ship. Can be used once per day. Use with caution.
+
+## 1.9.1
+
+- Remaps audio to account for Thunderstore path.
+- Fixes Readme.
 
 

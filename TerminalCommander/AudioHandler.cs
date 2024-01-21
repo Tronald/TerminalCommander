@@ -27,13 +27,24 @@ namespace TerminalCommander
       
         public void LoadAudio()
         {
-
+            PathCheck();
             Debug.Log($"Loading {jammerPath}");
             LoadAudio(AudioItem.Jammer);
             Debug.Log($"Loading {errorPath}");
             LoadAudio(AudioItem.Error);
             Debug.Log($"Loading {emergencyPath}");
             LoadAudio(AudioItem.Emergency);
+        }
+
+        private void PathCheck()
+        {
+            //Thunderstore patch
+            if (!File.Exists(jammerPath))
+            {
+                jammerPath = Path.Combine(Paths.BepInExRootPath, "plugins", "Tronald-TerminalCommander", "TerminalCommander.Audio", "jammer.wav");
+                errorPath = Path.Combine(Paths.BepInExRootPath, "plugins", "Tronald-TerminalCommander", "TerminalCommander.Audio", "error.wav");
+                emergencyPath = Path.Combine(Paths.BepInExRootPath, "plugins", "Tronald-TerminalCommander", "TerminalCommander.Audio", "emergency.wav");
+            }
         }
 
         private async void LoadAudio(AudioItem t)
