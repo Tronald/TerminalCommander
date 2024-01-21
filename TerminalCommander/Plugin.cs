@@ -16,7 +16,7 @@ namespace TerminalCommander
     {
         public const string modGUID = "Tronald.TerminalCommander";
         public const string modName = "TerminalCommander";
-        public const string modVersion = "1.8.1";
+        public const string modVersion = "1.9.0";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
@@ -28,6 +28,7 @@ namespace TerminalCommander
 
         public DateTime LastJamEvent = new DateTime();
         public DateTime LastDoorEvent = new DateTime();
+        public bool EmergencyTPUsed = false;
 
         internal ManualLogSource log;
         public AudioManager Audio;

@@ -18,6 +18,7 @@ namespace TerminalCommander.Patches
     {
         private static ManualLogSource logSource; // Log source field
         private static Commander commanderSource;
+        public static string EmergencyTpMessage = "Emergency Teleport Started...";
 
         // Method to set the log source
         public static void SetSource(Commander source)
@@ -37,6 +38,12 @@ namespace TerminalCommander.Patches
                     logSource.LogInfo($"Syncing host configurations {chatMessage}");
                     commanderSource.Configs.Set_Configs(chatMessage.Trim());
                     
+                }
+                if (nameOfUserWhoTyped == "" && chatMessage == EmergencyTpMessage)
+                {
+                    logSource.LogInfo($"Setting emergency TP used.");
+                    commanderSource.EmergencyTPUsed = true;
+
                 }
             }
             catch (Exception ex)

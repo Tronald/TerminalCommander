@@ -21,6 +21,7 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | Quick Transmit                    | <kbd>Ctrl</kbd>+<kbd>T</kbd> | **Requirements:** Signal Translator <br> Simplify communication by automatically entering the "transmit" command. You only need to type in your message. |
 | Teleport                    | <kbd>Ctrl</kbd>+<kbd>W</kbd> | **Requirements:** Teleporter <br> Triggers the teleporter. |
 | Inverse Teleport                    | <kbd>Ctrl</kbd>+<kbd>I</kbd> | **Requirements:** Inverse Teleporter <br> Starts the inverse teleporter. |
+| Emergency Teleport                    | <kbd>Ctrl</kbd>+<kbd>E</kbd> | **Requirements:** Teleporter <br> Teleports all plays back to the ship. Can only be used once per day (experimental, use with caution). |
 
 ## Command Features
 
@@ -34,12 +35,12 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 
 *Gameplay settings may be adjusted via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit these settings, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.*
 
-**NOTE: Host settings do not apply to clients as of this time, as the network API is currently broken. This will be fixed later.**
-
 | Setting                         | Description                                                                                            |
 |----------------------------------|--------------------------------------------------------------------------------------------------------|
+| "Sync host"	| Sync gameplay settings to clients. Ensures clients use hosts gameplay settings for Terminal Commander.	|
 | "Allow jamming"    | Is player allowed to use the turrent/mine jammer command.           |
 | "Allow door control"| Is player allowed to use the open/close all facility doors command. |
+| "Allow emergency teleport"| Is player allowed to execute an emergency teleport to bring everyone back to ship (experimental, use with caution). |
 | "Jamming cool down" | Cool down time in seconds that the player must wait before reusing the turrent/mine jammer command.|
 | "Door control cooldown" | Cool down time in seconds that the player must wait before reusing the open/close all facility doors command.|
 

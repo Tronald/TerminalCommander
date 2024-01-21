@@ -69,7 +69,7 @@ namespace TerminalCommander.Patches
                 "COMMANDS\n\n" +
                 ">TP\nTeleport currently viewed player on monitor.\n\n" +
                 ">ITP\nActivate inverse teleporter.\n\n" +
-                ">ETP\nActivate emergency teleporter.\n\n";
+                ">ETP\nStart emergency teleport (experimental).\n\n";
 
         }
         public static string TeleportCommand()
@@ -164,17 +164,16 @@ namespace TerminalCommander.Patches
                         t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                         return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
                     }
-                    float amt = teleporter.cooldownAmount;
-                 
-                        //Skip person who called emergency tp              
-                        // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
-                        // {
-                       
-                        var et = new GameObject().AddComponent<EmergencyTeleporter>();
-                        et.StartTeleporter(commanderSource, t, teleporter);
 
-                   
-                    t.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
+                    if (commanderSource.EmergencyTPUsed)
+                    {
+                        t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+                        return $"Emergency teleport cannot be used again today.\n\n";
+                    }
+                  
+                    var et = new GameObject().AddComponent<EmergencyTeleporter>();
+                    et.StartTeleporter(commanderSource, t, teleporter);
+                    HUDManager.Instance.AddTextToChatOnServer(ChatManagerPatch.EmergencyTpMessage);
 
                     return "Emergency teleporting all players...\n\n";
                 }

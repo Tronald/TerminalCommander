@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameNetcodeStuff;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 namespace TerminalCommander.Patches
 {
@@ -17,21 +19,28 @@ namespace TerminalCommander.Patches
         }
         IEnumerator Teleport(Commander commanderSource, Terminal terminal, ShipTeleporter teleporter)
         {
-            float amt = teleporter.cooldownAmount;
-            foreach (var player in StartOfRound.Instance.ClientPlayerList)
-            {
-                //Skip person who called emergency tp              
-                // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
-                // {
-                teleporter.cooldownAmount = amt;
-                terminal.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
-                teleporter.PressTeleportButtonOnLocalClient();
-                teleporter.cooldownAmount = 0f;
-                StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(true);
-                yield return new WaitForSeconds(2);
-                // }
+            commanderSource.log.LogInfo($"Gathering radar targets {StartOfRound.Instance.mapScreen.radarTargets.Count}");
+            List<PlayerControllerB> tped = new List<PlayerControllerB>();
+            terminal.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
+
+            for (int pcount = 0; pcount < StartOfRound.Instance.mapScreen.radarTargets.Count; pcount++)
+            {        
+                StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(pcount);
+                yield return new WaitForSeconds(.035f); //Allow target switch
+
+                var player = StartOfRound.Instance.mapScreen.targetedPlayer;
+                if (tped.Contains(player)) { continue; }
+                
+                commanderSource.log.LogInfo($"TP {player.playerUsername} - {!player.isInHangarShipRoom} {!player.isInElevator}");
+                if (!player.isInHangarShipRoom && !player.isInElevator)
+                {
+                    teleporter.PressTeleportButtonOnLocalClient();
+                }             
+                tped.Add(player);
+                yield return new WaitForSeconds(5); //Teleporter cannot be ran concurrently in Vanilla.
             }
-            teleporter.cooldownAmount = amt;
+          
         }
     }
+   
 }

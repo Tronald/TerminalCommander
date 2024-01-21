@@ -88,6 +88,11 @@ namespace TerminalCommander.Patches
                     {
                         SetTerminalText(t, TerminalCommands.InverseTeleportCommand());
                     }
+                    //Emergency Teleport Hot Key
+                    else if (BepInEx.UnityInput.Current.GetKeyDown(commanderSource.Configs.EmergencyTeleportKey))
+                    {
+                        SetTerminalText(t, TerminalCommands.EmergencyTeleportCommand());
+                    }
                 }
             }
             catch(Exception ex)

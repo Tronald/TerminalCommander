@@ -14,7 +14,6 @@ namespace TerminalCommander
         public bool AllowEmergencyTeleporter { get; set; } = true;
         public int JammingCoolDown { get; set; } = 0;
         public int BigDoorsCoolDown { get; set; } = 0;
-        public int EmergencyTeleporterCoolDown { get; set; } = 60;
 
         public UnityEngine.KeyCode JammingKey { get; set; } = UnityEngine.KeyCode.J;
         public UnityEngine.KeyCode DoorKey{ get; set; } = UnityEngine.KeyCode.D;
@@ -23,6 +22,7 @@ namespace TerminalCommander
         public UnityEngine.KeyCode TransmitKey { get; set; } = UnityEngine.KeyCode.T;
         public UnityEngine.KeyCode TeleportKey { get; set; } = UnityEngine.KeyCode.W;
         public UnityEngine.KeyCode InverseTeleportKey { get; set; } = UnityEngine.KeyCode.I;
+        public UnityEngine.KeyCode EmergencyTeleportKey { get; set; } = UnityEngine.KeyCode.E;
 
         //IN WORKS
         public void Set_Configs(Commander c)
@@ -31,12 +31,12 @@ namespace TerminalCommander
             SyncHost = c.Config.Bind("Gameplay", "Sync Host", true, "If true, host gameplay settings will sync with clients using Terminal Commander.").Value;
             AllowJamming = c.Config.Bind("Gameplay", "Allow jamming", true, "If false, removes turret and mine jamming ability.").Value;
             AllowBigDoors = c.Config.Bind("Gameplay", "Allow door control", true, "If false, removes ability to operate facility powered doors.").Value;
-            AllowEmergencyTeleporter = c.Config.Bind("Gameplay", "Allow emergency teleport", true, "If false, removes ability to emergency teleport everyone back to the ship.").Value;
+            AllowEmergencyTeleporter = c.Config.Bind("Gameplay", "Allow emergency teleport (experimental)", true, "If false, removes ability to emergency teleport everyone back to the ship.").Value;
 
             //Cooldown is for player only, not entire server. This prevents spam. Consider coverting to a gameplay setting in the future.
             JammingCoolDown = c.Config.Bind("Gameplay", "Jamming cool down", 0, "Cool down time in seconds before the same player can send another jamming signal.").Value;
             BigDoorsCoolDown = c.Config.Bind("Gameplay", "Door control cool down", 0, "Cool down time in seconds before the same player can send another command to open / close all doors.").Value;
-            EmergencyTeleporterCoolDown = c.Config.Bind("Gameplay", "Emergency teleporter cooldown", 0, "Cool down time in seconds before the same player can execute another emergency teleport.").Value;
+         
 
             //Max cooldown 200
             if (JammingCoolDown > 255) { JammingCoolDown = 255; }
@@ -50,11 +50,12 @@ namespace TerminalCommander
             TransmitKey = c.Config.Bind("Key Binds", "Start transmission (Ctrl+)", UnityEngine.KeyCode.T).Value;
             TeleportKey = c.Config.Bind("Key Binds", "Teleport (Ctrl+)", UnityEngine.KeyCode.W).Value;
             InverseTeleportKey = c.Config.Bind("Key Binds", "Inverse Teleport (Ctrl+)", UnityEngine.KeyCode.I).Value;
+            EmergencyTeleportKey = c.Config.Bind("Key Binds", "Emergency Teleport (Ctrl+)", UnityEngine.KeyCode.E).Value;
         }
 
         public void Set_Configs(string hostConfigString)
         {
-            Regex regex = new Regex(@"tsync[0,1][0,1][0,1]:\d+:\d+:\d+");
+            Regex regex = new Regex(@"tsync[0,1][0,1][0,1]:\d+:\d+");
             if (!regex.IsMatch(hostConfigString)) { return; }
             string[] values = hostConfigString.Replace("tsync", "").Split(':');
 
@@ -63,7 +64,6 @@ namespace TerminalCommander
             AllowEmergencyTeleporter = Convert.ToBoolean(Convert.ToInt16(values[0][2].ToString()));
             JammingCoolDown = Convert.ToInt32(values[1]);
             BigDoorsCoolDown = Convert.ToInt32(values[2]);
-            EmergencyTeleporterCoolDown = Convert.ToInt32(values[3]);
         }
 
         public  string SyncMessage()
@@ -71,7 +71,7 @@ namespace TerminalCommander
             int aJam = AllowJamming ? 1 : 0;
             int aBD = AllowBigDoors ? 1 : 0;
             int aET = AllowEmergencyTeleporter ? 1 : 0;
-            return $"tsync{aJam}{aBD}{aET}:{JammingCoolDown}:{BigDoorsCoolDown}:{EmergencyTeleporterCoolDown}";
+            return $"tsync{aJam}{aBD}{aET}:{JammingCoolDown}:{BigDoorsCoolDown}";
         }
     }
 }
