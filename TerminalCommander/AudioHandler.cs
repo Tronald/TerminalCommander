@@ -28,7 +28,7 @@ namespace TerminalCommander
         private string errorPath = Path.Combine(Paths.BepInExRootPath, "plugins", "TerminalCommander.Audio", "error.wav");
         private string emergencyPath = Path.Combine(Paths.BepInExRootPath, "plugins", "TerminalCommander.Audio", "emergency.wav");
 
-        void Start()
+        void Awake()
         {
             LoadAudio();
         }
