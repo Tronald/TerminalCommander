@@ -1,11 +1,7 @@
 ﻿using BepInEx.Logging;
 using HarmonyLib;
-using LethalNetworkAPI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine.Diagnostics;
 
 namespace TerminalCommander.Patches
 {
@@ -29,9 +25,18 @@ namespace TerminalCommander.Patches
         {
             try
             {
+                if (!commanderSource.Configs.SyncHost) { return; } // Host has disabled gameplay sync
+
                 commanderSource.StartOfRound = true;
                 commanderSource.LastJamEvent = new DateTime();
                 commanderSource.LastDoorEvent = new DateTime();
+                commanderSource.EmergencyTPUsed = false;
+
+                //SYNC SETTINGS IF SYNC TURNED ON
+                if (RoundManager.Instance.IsHost)
+                {                  
+                    HUDManager.Instance.AddTextToChatOnServer(commanderSource.Configs.SyncMessage());
+                }
             }
             catch (Exception ex)
             {

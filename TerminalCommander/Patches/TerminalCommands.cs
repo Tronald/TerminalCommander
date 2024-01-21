@@ -12,6 +12,8 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using GameNetcodeStuff;
+using System.Collections;
 
 namespace TerminalCommander.Patches
 {
@@ -49,7 +51,12 @@ namespace TerminalCommander.Patches
             {
                 Category = "Commander",
                 DisplayTextSupplier = InverseTeleportCommand
-            });          
+            });
+            AddCommand("etp", new CommandInfo
+            {
+                Category = "Commander",
+                DisplayTextSupplier = EmergencyTeleportCommand
+            });
         }
         private static string OnHotKeyHelpCommand()
         {
@@ -61,12 +68,14 @@ namespace TerminalCommander.Patches
                 ">Ctrl+T\nBegin a signal transmission command.\n\n" +
                 "COMMANDS\n\n" +
                 ">TP\nTeleport currently viewed player on monitor.\n\n" +
-                ">ITP\nActivate inverse teleporter.\n\n";
+                ">ITP\nActivate inverse teleporter.\n\n" +
+                ">ETP\nStart emergency teleport (experimental).\n\n";
 
         }
         public static string TeleportCommand()
         {
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
+            Terminal t = FindActiveObject<Terminal>();
             if (teleporters!=null && teleporters.Length > 0)
             {           
                
@@ -81,30 +90,12 @@ namespace TerminalCommander.Patches
                 }
                 
             }
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
             return "Nuh uh, no teleporter\n\n";
-        }
-        /// <summary>
-        /// Entrance teleporter excample. Does not appear to be fully implemented
-        /// in game
-        /// </summary>
-        /// <returns>string</returns>
-        public static string EntranceTeleportCommand()
-        {
-
-            EntranceTeleport[] inverseteleporters = UnityEngine.Object.FindObjectsOfType<EntranceTeleport>();
-            if (inverseteleporters == null || inverseteleporters.Length == 0)
-            {
-                return "No inverse teleporter detected.\n\n";
-            }
-            else
-            {
-                EntranceTeleport shipTeleporter = inverseteleporters[0];
-                shipTeleporter.TeleportPlayer();
-                return "Teleporting...\n\n";
-            }
         }
         public static string InverseTeleportCommand()
         {
+            Terminal t = FindActiveObject<Terminal>();
             ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
             if (teleporters != null && teleporters.Length > 0)
             {
@@ -130,7 +121,80 @@ namespace TerminalCommander.Patches
                 }
 
             }
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+
             return "Nuh uh, no inverse teleporter\n\n";
         }
+        /// <summary>
+        /// Entrance teleporter excample. Does not appear to be fully implemented
+        /// in game
+        /// </summary>
+        /// <returns>string</returns>
+        public static string EntranceTeleportCommand()
+        {
+
+            EntranceTeleport[] inverseteleporters = UnityEngine.Object.FindObjectsOfType<EntranceTeleport>();
+            if (inverseteleporters == null || inverseteleporters.Length == 0)
+            {
+                return "No inverse teleporter detected.\n\n";
+            }
+            else
+            {
+                EntranceTeleport shipTeleporter = inverseteleporters[0];
+                shipTeleporter.TeleportPlayer();
+                return "Teleporting...\n\n";
+            }
+        }
+        public static string EmergencyTeleportCommand()
+        {
+            Terminal t = FindActiveObject<Terminal>();
+            ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
+            if (teleporters != null && teleporters.Length > 0)
+            {
+
+                foreach (ShipTeleporter teleporter in teleporters)
+                {
+                    if (teleporter.isInverseTeleporter)
+                    {
+                        continue;
+                    }
+
+                    if (!StartOfRound.Instance.shipHasLanded)
+                    {
+                        t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+                        return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
+                    }
+
+                    if (commanderSource.EmergencyTPUsed)
+                    {
+                        t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+                        return $"Emergency teleport cannot be used again today.\n\n";
+                    }
+                  
+                    var et = new GameObject().AddComponent<EmergencyTeleporter>();
+                    et.StartTeleporter(commanderSource, t, teleporter);
+                    HUDManager.Instance.AddTextToChatOnServer(ChatManagerPatch.EmergencyTpMessage);
+
+                    return "Emergency teleporting all players...\n\n";
+                }
+
+            }
+            t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+            return "Nuh uh, no teleporter\n\n";
+        }
+        static T FindActiveObject<T>() where T : UnityEngine.Object
+        {
+            T[] unityObjects = UnityEngine.Object.FindObjectsOfType<T>();
+
+            if (unityObjects.Length > 0)
+            {
+                // For simplicity, just return the first found.
+                //May need to expand later if first object is not desired object.
+                return unityObjects[0];
+            }
+
+            return null;
+        }
     }
+    
 }
