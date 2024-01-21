@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
 using HarmonyLib;
 using System;
+using UnityEngine.Diagnostics;
 
 namespace TerminalCommander.Patches
 {
@@ -24,9 +25,17 @@ namespace TerminalCommander.Patches
         {
             try
             {
+                if (!commanderSource.Configs.SyncHost) { return; } // Host has disable gameplay sync
+
                 commanderSource.StartOfRound = true;
                 commanderSource.LastJamEvent = new DateTime();
                 commanderSource.LastDoorEvent = new DateTime();
+
+                //SYNC SETTINGS IF SYNC TURNED ON
+                if (RoundManager.Instance.IsHost)
+                {                  
+                    HUDManager.Instance.AddTextToChatOnServer(commanderSource.Configs.SyncMessage());
+                }
             }
             catch (Exception ex)
             {

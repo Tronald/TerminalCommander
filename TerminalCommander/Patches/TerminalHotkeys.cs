@@ -102,7 +102,7 @@ namespace TerminalCommander.Patches
             //TerminalNode tn = t.terminalNodes.specialNodes[20];
             //StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
             //t.LoadNewNode(tn);
-
+         
             string cmd = "switch";
 
             t.screenText.text += cmd;
@@ -120,12 +120,14 @@ namespace TerminalCommander.Patches
             if(!commanderSource.Configs.AllowBigDoors)
             {
                 SetTerminalText(t, "This command has been disabled by the company.\n\n");
+                commanderSource.Audio.PlaySound(AudioItem.Error);
                 return;
             }
             if(d < commanderSource.LastDoorEvent)
             {
                 var ts = commanderSource.LastDoorEvent - d;
                 SetTerminalText(t, $"Door signal cool down time remaining: {Math.Round(ts.TotalSeconds)} seconds.\n\n");
+                commanderSource.Audio.PlaySound(AudioItem.Error);
                 return;
             }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
@@ -167,12 +169,14 @@ namespace TerminalCommander.Patches
             if (!commanderSource.Configs.AllowJamming)
             {
                 SetTerminalText(t, "This command has been disabled by the company.\n\n");
+                commanderSource.Audio.PlaySound(AudioItem.Error);
                 return;
             }
             if (d < commanderSource.LastJamEvent)
             {
                 var ts = commanderSource.LastJamEvent - d;
                 SetTerminalText(t, $"Jammer cool down time remaining: {Math.Round(ts.TotalSeconds)} seconds.\n\n");
+                commanderSource.Audio.PlaySound(AudioItem.Error);
                 return;
             }
             TerminalAccessibleObject[] taos = (from x in UnityEngine.Object.FindObjectsOfType<TerminalAccessibleObject>()
@@ -188,10 +192,11 @@ namespace TerminalCommander.Patches
             }
 
             SetTerminalText(t, "Jamming turrets and land mines\n\n");
-
+            commanderSource.Audio.PlaySound(AudioItem.Jammer);
+            
             t.terminalAudio.PlayOneShot(t.codeBroadcastSFX, 1f);
             t.codeBroadcastAnimator.SetTrigger("display");
-
+         
             commanderSource.LastJamEvent = DateTime.Now;
 
             logSource.LogInfo($"{Commander.modName} TerminalAccessibleObjects Called: Count{taos.Count()} - ({string.Join(", ", items)})");

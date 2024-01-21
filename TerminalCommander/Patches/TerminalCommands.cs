@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using GameNetcodeStuff;
 
 namespace TerminalCommander.Patches
 {
@@ -49,7 +50,12 @@ namespace TerminalCommander.Patches
             {
                 Category = "Commander",
                 DisplayTextSupplier = InverseTeleportCommand
-            });          
+            });
+            AddCommand("etp", new CommandInfo
+            {
+                Category = "Commander",
+                DisplayTextSupplier = EmergencyTeleportCommand
+            });
         }
         private static string OnHotKeyHelpCommand()
         {
@@ -61,7 +67,8 @@ namespace TerminalCommander.Patches
                 ">Ctrl+T\nBegin a signal transmission command.\n\n" +
                 "COMMANDS\n\n" +
                 ">TP\nTeleport currently viewed player on monitor.\n\n" +
-                ">ITP\nActivate inverse teleporter.\n\n";
+                ">ITP\nActivate inverse teleporter.\n\n" +
+                ">ETP\nActivate emergency teleporter.\n\n";
 
         }
         public static string TeleportCommand()
@@ -81,27 +88,8 @@ namespace TerminalCommander.Patches
                 }
                 
             }
+            commanderSource.Audio.PlaySound(AudioItem.Error);
             return "Nuh uh, no teleporter\n\n";
-        }
-        /// <summary>
-        /// Entrance teleporter excample. Does not appear to be fully implemented
-        /// in game
-        /// </summary>
-        /// <returns>string</returns>
-        public static string EntranceTeleportCommand()
-        {
-
-            EntranceTeleport[] inverseteleporters = UnityEngine.Object.FindObjectsOfType<EntranceTeleport>();
-            if (inverseteleporters == null || inverseteleporters.Length == 0)
-            {
-                return "No inverse teleporter detected.\n\n";
-            }
-            else
-            {
-                EntranceTeleport shipTeleporter = inverseteleporters[0];
-                shipTeleporter.TeleportPlayer();
-                return "Teleporting...\n\n";
-            }
         }
         public static string InverseTeleportCommand()
         {
@@ -130,7 +118,66 @@ namespace TerminalCommander.Patches
                 }
 
             }
+            commanderSource.Audio.PlaySound(AudioItem.Error);
             return "Nuh uh, no inverse teleporter\n\n";
         }
+        /// <summary>
+        /// Entrance teleporter excample. Does not appear to be fully implemented
+        /// in game
+        /// </summary>
+        /// <returns>string</returns>
+        public static string EntranceTeleportCommand()
+        {
+
+            EntranceTeleport[] inverseteleporters = UnityEngine.Object.FindObjectsOfType<EntranceTeleport>();
+            if (inverseteleporters == null || inverseteleporters.Length == 0)
+            {
+                return "No inverse teleporter detected.\n\n";
+            }
+            else
+            {
+                EntranceTeleport shipTeleporter = inverseteleporters[0];
+                shipTeleporter.TeleportPlayer();
+                return "Teleporting...\n\n";
+            }
+        }
+        public static string EmergencyTeleportCommand()
+        {
+            ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
+            if (teleporters != null && teleporters.Length > 0)
+            {
+
+                foreach (ShipTeleporter teleporter in teleporters)
+                {
+                    if (teleporter.isInverseTeleporter)
+                    {
+                        continue;
+                    }
+
+                    if (!StartOfRound.Instance.shipHasLanded)
+                    {
+                        return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
+                    }
+
+                    foreach (var player in StartOfRound.Instance.allPlayerScripts)
+                    {
+                        //Skip person who called emergency tp              
+                        // if (player.playerClientId != (ulong)StartOfRound.Instance.thisClientPlayerId)
+                        // {
+                        commanderSource.log.LogInfo($"Emergency teleporting: {player.playerClientId}");
+                        teleporter.PressTeleportButtonOnLocalClient();
+                        // }
+                        StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
+
+                    }
+                    commanderSource.Audio.PlaySound(AudioItem.Emergency);
+                    return "Emergency teleporting all players...\n\n";
+                }
+
+            }
+            commanderSource.Audio.PlaySound(AudioItem.Error);
+            return "Nuh uh, no teleporter\n\n";
+        }
+      
     }
 }

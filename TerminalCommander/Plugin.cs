@@ -3,6 +3,8 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using TerminalCommander.Patches;
+using UnityEngine;
+using UnityEngine.Networking;
 using System;
 
 
@@ -27,6 +29,7 @@ namespace TerminalCommander
         public DateTime LastDoorEvent = new DateTime();
 
         internal ManualLogSource log;
+        public AudioManager Audio;
 
         void Awake()
         {
@@ -39,14 +42,18 @@ namespace TerminalCommander
 
             TerminalHotkeys.SetSource(this);
             TerminalCommands.SetSource(this);
-            //GameManagement.SetSource(this);
             RoundManagerPatch.SetSource(this);
+            ChatManagerPatch.SetSource(this);
+
+            Audio = gameObject.AddComponent<AudioManager>();           
 
             harmony.PatchAll(typeof(Commander));
             harmony.PatchAll(typeof(TerminalHotkeys));
-            harmony.PatchAll(typeof(TerminalCommands));
-            //harmony.PatchAll(typeof(GameManagement));
-            harmony.PatchAll(typeof(RoundManagerPatch));
-        }      
+            harmony.PatchAll(typeof(TerminalCommands));          
+            harmony.PatchAll(typeof(RoundManagerPatch));  
+            harmony.PatchAll(typeof(ChatManagerPatch));
+           
+        }     
+        
     }    
 }
