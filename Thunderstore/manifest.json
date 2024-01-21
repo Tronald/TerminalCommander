@@ -1,10 +1,10 @@
 {
   "name": "TerminalCommander",
-  "version_number": "1.9.0",
+  "version_number": "1.9.1",
   "website_url": "https://github.com/Tronald/TerminalCommander",
   "description": "Enhance your terminal operation experience by introducing convenient hotkeys. This mod simplifies various tasks, allowing you to manage turrets, landmines, player views, and communication more efficiently.",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2100",
-    "NotAtomicBomb-TerminalApi-1.5.0"
+    "NotAtomicBomb-TerminalApi-1.5.1"
   ]
 }

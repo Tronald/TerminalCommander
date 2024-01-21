@@ -30,6 +30,7 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | "help" -> "commander"    | Displays a list of hot key commands within the terminal for reference.           |
 |"tp"| Teleport player currently viewed on the terminal monitor. |
 | "itp" | Activates the inverse teleporter.|
+| "etp"  | Teleports all plays back to the ship. Can only be used once per day (experimental, use with caution). |
 
 ## Gameplay Settings
 
