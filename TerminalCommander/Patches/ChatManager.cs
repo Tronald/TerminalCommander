@@ -18,7 +18,8 @@ namespace TerminalCommander.Patches
     {
         private static ManualLogSource logSource; // Log source field
         private static Commander commanderSource;
-        public static string EmergencyTpMessage = "Emergency Teleport Started...";
+        public static string EmergencyTpStartMessage = "Emergency Teleport Started...";
+        public static string EmergencyTpEndMessage = "Emergency Teleport Complete...";
 
         // Method to set the log source
         public static void SetSource(Commander source)
@@ -32,17 +33,32 @@ namespace TerminalCommander.Patches
         static void SyncConfigs(string chatMessage, string nameOfUserWhoTyped = "")
         {
             try
-            {
+            {          
                 if (nameOfUserWhoTyped=="" && chatMessage.StartsWith("tsync") && !RoundManager.Instance.IsHost)
                 {
                     logSource.LogInfo($"Syncing host configurations {chatMessage}");
                     commanderSource.Configs.Set_Configs(chatMessage.Trim());
                     
-                }
-                if (nameOfUserWhoTyped == "" && chatMessage == EmergencyTpMessage)
+                }          
+                if (nameOfUserWhoTyped == "" && chatMessage == EmergencyTpStartMessage)
                 {
-                    logSource.LogInfo($"Setting emergency TP used.");
-                    commanderSource.EmergencyTPUsed = true;
+                    if (commanderSource.EmergencyTPInUse) { return; }//blocks double call on server.
+                    Terminal t = FindActiveObject<Terminal>();
+                    ShipTeleporter[] teleporters = UnityEngine.Object.FindObjectsOfType<ShipTeleporter>();
+
+                    logSource.LogInfo($"Setting emergency TP count.");
+                    commanderSource.EmergencyTPCount++;
+
+                    //IF HOST
+                    t.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
+                    logSource.LogInfo($"Emergency TP in use: true.");
+                    commanderSource.EmergencyTPInUse = true;
+
+                }
+                if (nameOfUserWhoTyped == "" && chatMessage == EmergencyTpEndMessage)
+                {
+                    logSource.LogInfo($"Emergency TP in use: false.");
+                    commanderSource.EmergencyTPInUse = false;
 
                 }
             }
@@ -51,6 +67,20 @@ namespace TerminalCommander.Patches
                 //Configs not synced
                 logSource.LogError($"Sync Config Error: {ex.Message}");
             };
+        }
+
+        static T FindActiveObject<T>() where T : UnityEngine.Object
+        {
+            T[] unityObjects = UnityEngine.Object.FindObjectsOfType<T>();
+
+            if (unityObjects.Length > 0)
+            {
+                // For simplicity, just return the first found.
+                //May need to expand later if first object is not desired object.
+                return unityObjects[0];
+            }
+
+            return null;
         }
 
     }

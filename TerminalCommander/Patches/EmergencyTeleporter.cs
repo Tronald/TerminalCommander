@@ -21,7 +21,7 @@ namespace TerminalCommander.Patches
         {
             commanderSource.log.LogInfo($"Gathering radar targets {StartOfRound.Instance.mapScreen.radarTargets.Count}");
             List<PlayerControllerB> tped = new List<PlayerControllerB>();
-            terminal.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
+            //terminal.terminalAudio.PlayOneShot(commanderSource.Audio.emergencyAudio);
 
             for (int pcount = 0; pcount < StartOfRound.Instance.mapScreen.radarTargets.Count; pcount++)
             {        
@@ -39,7 +39,8 @@ namespace TerminalCommander.Patches
                 tped.Add(player);
                 yield return new WaitForSeconds(5); //Teleporter cannot be ran concurrently in Vanilla.
             }
-          
+
+            HUDManager.Instance.AddTextToChatOnServer(ChatManagerPatch.EmergencyTpEndMessage);
         }
     }
    

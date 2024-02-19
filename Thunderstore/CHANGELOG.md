@@ -72,5 +72,10 @@
 - Fixes emergency teleport user configuration.
 - Updates Readme.
 
+## 1.10.1
+
+- Adds ability for host to set maximum number of emergency teleports per round. Maximum was previously limited to 1 per round.
+- Adds syncs emergency teleport execution alarm for all players when emergency teleport is used.
+
 
 

@@ -30,7 +30,7 @@ namespace TerminalCommander.Patches
                 commanderSource.StartOfRound = true;
                 commanderSource.LastJamEvent = new DateTime();
                 commanderSource.LastDoorEvent = new DateTime();
-                commanderSource.EmergencyTPUsed = false;
+                commanderSource.EmergencyTPCount = 0;
 
                 //SYNC SETTINGS IF SYNC TURNED ON
                 if (RoundManager.Instance.IsHost)

@@ -140,6 +140,8 @@ namespace TerminalCommander.Patches
             }
             else
             {
+                var player = StartOfRound.Instance.mapScreen.targetedPlayer;
+                player.beamUpParticle.Play();
                 EntranceTeleport shipTeleporter = inverseteleporters[0];
                 shipTeleporter.TeleportPlayer();
                 return "Teleporting...\n\n";
@@ -147,7 +149,9 @@ namespace TerminalCommander.Patches
         }
         public static string EmergencyTeleportCommand()
         {
-            if(!commanderSource.Configs.AllowEmergencyTeleporter)
+            logSource.LogInfo($"Emergency TP attempted.");
+
+            if (!commanderSource.Configs.AllowEmergencyTeleporter)
             {
                 return "Emergency teleport has been disabled by the company.\n\n";
             }
@@ -167,16 +171,22 @@ namespace TerminalCommander.Patches
                         t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                         return "Cannot emergency teleport until ship has fully landed and stabilized.\n\n";
                     }
-
-                    if (commanderSource.EmergencyTPUsed)
+                    if(commanderSource.EmergencyTPInUse)
                     {
+                        logSource.LogInfo($"Emergency TP is in use and cannot be used.");
+                        t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
+                        return $"Emergency teleporter is currently is use.\n\n";
+                    }
+                    if (commanderSource.EmergencyTPCount>= commanderSource.Configs.MaxEmergencyTeleports)
+                    {
+                        logSource.LogInfo($"Emergency TPs used {commanderSource.EmergencyTPCount} Max allowed {commanderSource.Configs.MaxEmergencyTeleports}.");
                         t.terminalAudio.PlayOneShot(commanderSource.Audio.errorAudio);
                         return $"Emergency teleport cannot be used again today.\n\n";
                     }
                   
                     var et = new GameObject().AddComponent<EmergencyTeleporter>();
                     et.StartTeleporter(commanderSource, t, teleporter);
-                    HUDManager.Instance.AddTextToChatOnServer(ChatManagerPatch.EmergencyTpMessage);
+                    HUDManager.Instance.AddTextToChatOnServer(ChatManagerPatch.EmergencyTpStartMessage); 
 
                     return "Emergency teleporting all players...\n\n";
                 }
