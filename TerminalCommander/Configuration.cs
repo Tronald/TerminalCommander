@@ -12,6 +12,8 @@ namespace TerminalCommander
         public bool AllowJamming { get; set; } = true;
         public bool AllowBigDoors { get; set; } = true;
         public bool AllowEmergencyTeleporter { get; set; } = true;
+        //Max per round
+        public int MaxEmergencyTeleports { get; set; } = 1;
         public int JammingCoolDown { get; set; } = 0;
         public int BigDoorsCoolDown { get; set; } = 0;
 
@@ -36,11 +38,12 @@ namespace TerminalCommander
             //Cooldown is for player only, not entire server. This prevents spam. Consider coverting to a gameplay setting in the future.
             JammingCoolDown = c.Config.Bind("Gameplay", "Jamming cool down", 0, "Cool down time in seconds before the same player can send another jamming signal.").Value;
             BigDoorsCoolDown = c.Config.Bind("Gameplay", "Door control cool down", 0, "Cool down time in seconds before the same player can send another command to open / close all doors.").Value;
-         
+            MaxEmergencyTeleports = c.Config.Bind("Gameplay", "Maximum emergency teleports", 1, "Maximum number of emergency teleports that may be executed per round.").Value;
 
             //Max cooldown 200
             if (JammingCoolDown > 255) { JammingCoolDown = 255; }
             if (BigDoorsCoolDown > 255) { JammingCoolDown = 255; }
+            if (MaxEmergencyTeleports > 99) { MaxEmergencyTeleports = 99; }
 
             //Key Binds
             JammingKey = c.Config.Bind("Key Binds", "Jamming (Ctrl+)", UnityEngine.KeyCode.J).Value;
@@ -55,7 +58,7 @@ namespace TerminalCommander
 
         public void Set_Configs(string hostConfigString)
         {
-            Regex regex = new Regex(@"tsync[0,1][0,1][0,1]:\d+:\d+");
+            Regex regex = new Regex(@"tsync[0,1][0,1][0,1]:\d+:\d+:\d+");
             if (!regex.IsMatch(hostConfigString)) { return; }
             string[] values = hostConfigString.Replace("tsync", "").Split(':');
 
@@ -64,6 +67,7 @@ namespace TerminalCommander
             AllowEmergencyTeleporter = Convert.ToBoolean(Convert.ToInt16(values[0][2].ToString()));
             JammingCoolDown = Convert.ToInt32(values[1]);
             BigDoorsCoolDown = Convert.ToInt32(values[2]);
+            MaxEmergencyTeleports = Convert.ToInt32(values[3]);
         }
 
         public  string SyncMessage()
@@ -71,7 +75,7 @@ namespace TerminalCommander
             int aJam = AllowJamming ? 1 : 0;
             int aBD = AllowBigDoors ? 1 : 0;
             int aET = AllowEmergencyTeleporter ? 1 : 0;
-            return $"tsync{aJam}{aBD}{aET}:{JammingCoolDown}:{BigDoorsCoolDown}";
+            return $"tsync{aJam}{aBD}{aET}:{JammingCoolDown}:{BigDoorsCoolDown}:{MaxEmergencyTeleports}";
         }
     }
 }

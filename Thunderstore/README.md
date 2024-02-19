@@ -10,7 +10,7 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 
 ## Hotkey Features
 
-*All hotkeys may be reconfigured via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit keybinds, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.**
+*All hotkeys may be reconfigured via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit keybinds, but users may edit the ...\Lethal Company\BepInEx\config\Tronald.TerminalCommander.cfg file directly.**
 
 | Feature                          | Hotkey Command                 | Description                                                                                            |
 |----------------------------------|----------------------|--------------------------------------------------------------------------------------------------------|
@@ -30,11 +30,11 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | "help" -> "commander"    | Displays a list of hot key commands within the terminal for reference.           |
 |"tp"| Teleport player currently viewed on the terminal monitor. |
 | "itp" | Activates the inverse teleporter.|
-| "etp"  | Teleports all players back to the ship. Can only be used once per day (experimental, use with caution). |
+| "etp"  | Emergency teleport all players back to the ship. Can only be used once per day (experimental, use with caution). |
 
 ## Gameplay Settings
 
-*Gameplay settings may be adjusted via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit these settings, but users may edit the ...\Lethal Company\BepInEx\config\Tronal.TerminalCommander.cfg file directly.*
+*Gameplay settings may be adjusted via the configuration file. It is recommended that you use a configuration editor mod such as LethalConfig to edit these settings, but users may edit the ...\Lethal Company\BepInEx\config\Tronald.TerminalCommander.cfg file directly.*
 
 | Setting                         | Description                                                                                            |
 |----------------------------------|--------------------------------------------------------------------------------------------------------|
@@ -44,6 +44,7 @@ Terminal Commander is a mod for Lethal Company designed to enhance your terminal
 | "Allow emergency teleport"| Is player allowed to execute an emergency teleport to bring everyone back to ship (experimental, use with caution). |
 | "Jamming cool down" | Cool down time in seconds that the player must wait before reusing the turrent/mine jammer command.|
 | "Door control cooldown" | Cool down time in seconds that the player must wait before reusing the open/close all facility doors command.|
+| "Max emergency teleports" | Maximum number of emergency teleports that may be executed per round.|
 
 ## Contributors
 
